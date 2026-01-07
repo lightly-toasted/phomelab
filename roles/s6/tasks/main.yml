@@ -1,6 +1,0 @@
----
-- name: Install s6 packages
-  ansible.builtin.apt:
-    name:
-      - s6
-    state: present
