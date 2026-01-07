@@ -1,0 +1,10 @@
+---
+opengist_version: "1.11.1"
+opengist_arch: arm64
+opengist_url: "https://github.com/thomiceli/opengist/releases/download/v{{ opengist_version }}/opengist{{ opengist_version }}-linux-{{ opengist_arch }}.tar.gz"
+opengist_sha256: "d3dd6a5496178c61cf87f694c44b832fb6ba56b1acd3e2eced0f20b4cdb9a403"
+opengist_tarball: "/var/cache/opengist-{{ opengist_version }}.tar.gz"
+
+opengist_user: gist
+opengist_group: opengist
+opengist_port: "3001"
