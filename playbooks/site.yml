@@ -4,11 +4,11 @@
   become: true
 
   roles:
-    - base
-    - users
-    - s6
-    - nix
+    - { role: base, tags: [base] }
+    - { role: users, tags: [users] }
+    - { role: s6, tags: [s6] }
+    - { role: nix, tags: [nix] }
 
     # services
-    - glances
-    - opengist
+    - { role: glances, tags: [glances] }
+    - { role: opengist, tags: [opengist] }
