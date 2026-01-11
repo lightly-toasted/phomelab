@@ -41,7 +41,7 @@
   
 - name: Configure log service
   include_role:
-    name: s6-log
+    name: s6_log
   vars:
     s6_log_service_name: cloudflared
 
