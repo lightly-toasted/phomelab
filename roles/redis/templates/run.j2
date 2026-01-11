@@ -1,0 +1,10 @@
+#!/bin/execlineb -P
+foreground {
+  install -d -m 750 -o redis -g redis "$(dirname {{ redis_socket }})"
+}
+
+export LANG c
+export LC_ALL C
+
+s6-setuidgid {{ redis_user }}
+exec /opt/redis/bin/redis-server /etc/redis/redis.conf

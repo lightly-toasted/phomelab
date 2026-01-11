@@ -8,6 +8,9 @@
     - { role: users, tags: [users] }
     - { role: nix, tags: [nix] }
 
+    # databases
+    - { role: redis, tags: [redis] }
+
     # services
     - { role: glances, tags: [glances] }
     - { role: opengist, tags: [opengist] }

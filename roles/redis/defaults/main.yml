@@ -1,0 +1,3 @@
+---
+redis_user: redis
+redis_socket: /run/redis/redis.sock
