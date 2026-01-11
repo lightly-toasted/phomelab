@@ -1,0 +1,4 @@
+---
+cloudflared_user: cloudflared
+cloudflared_group: cloudflared
+cloudflared_tunnel: 80415f05-21c3-4e0e-9b59-2e155b5f3cb3

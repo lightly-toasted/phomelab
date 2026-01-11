@@ -1,0 +1,7 @@
+tunnel: {{ cloudflared_tunnel }}
+credentials-file: /etc/cloudflared/{{ cloudflared_tunnel }}.json
+
+ingress:
+  - hostname: gist.700457.xyz
+    service: http://localhost:{{ opengist_port }}
+  - service: http_status:404
