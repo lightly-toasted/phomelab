@@ -10,7 +10,7 @@
   vars:
     s6_log_service_name: glances
 
-- name: Install s6 run script
+- name: Create s6 run script
   template:
     src: run.j2
     dest: /etc/services.d/glances/run

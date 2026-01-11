@@ -1,5 +1,5 @@
 ---
-- name: Require log service name to be provided
+- name: Ensure s6_log_service_name is provided
   ansible.builtin.assert:
     that:
       - s6_log_service_name is defined
@@ -12,7 +12,7 @@
     state: directory
     mode: "0755"
 
-- name: Install log service run script
+- name: Create log service run script
   ansible.builtin.template:
     src: run.j2
     dest: "{{ s6_log_directory }}/run"

@@ -21,7 +21,7 @@
     - "/var/lib/opengist"
     - "/etc/opengist"
 
-- name: Download Opengist tarball
+- name: Fetch Opengist tarball
   get_url:
     url: "{{ opengist_url }}"
     dest: "{{ opengist_tarball }}"
@@ -36,13 +36,13 @@
     extra_opts:
       - --strip-components=1
 
-- name: Install config.yml
+- name: Create config.yml
   template:
     src: config.yml.j2
     dest: /etc/opengist/config.yml
     mode: "0644"
 
-- name: Install s6 run script
+- name: Create s6 run script
   template:
     src: run.j2
     dest: /etc/services.d/opengist/run
