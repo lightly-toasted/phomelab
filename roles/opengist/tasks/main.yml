@@ -1,16 +1,13 @@
 ---
-- name: Ensure opengist group exists
-  group:
-    name: "{{ opengist_group }}"
+- name: Ensure Opengist service user exists
+  include_role:
+    name: service_user
+  vars:
+    service_user_name: "{{ opengist_user }}"
+    service_user_group: "{{ opengist_group }}"
+    service_user_home: /var/lib/opengist
 
-- name: Ensure opengist user exists
-  user:
-    name: "{{ opengist_user }}"
-    group: "{{ opengist_group }}"
-    shell: /usr/sbin/nologin
-    home: /var/lib/opengist
-
-- name: Create Opengist directories
+- name: Ensure Opengist directories exists
   file:
     path: "{{ item }}"
     state: directory

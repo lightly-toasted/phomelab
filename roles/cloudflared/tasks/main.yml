@@ -1,14 +1,9 @@
 ---
-- name: Ensure cloudflared group exists
-  group:
-    name: "{{ cloudflared_group }}"
-
-- name: Ensure cloudflared user exists
-  user:
-    name: "{{ cloudflared_user }}"
-    group: "{{ cloudflared_group }}"
-    shell: /usr/sbin/nologin
-    home: /var/lib/cloudflared
+- name: Ensure cloudflared service user exists
+  include_role:
+    name: service_user
+  vars:
+    service_user_name: "{{ cloudflared_user }}"
 
 - name: Create cloudflared directories
   file:

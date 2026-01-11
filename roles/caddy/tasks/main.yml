@@ -4,16 +4,11 @@
     name:
       - caddy
 
-- name: Ensure caddy group exists
-  group:
-    name: "{{ caddy_group }}"
-
-- name: Ensure caddy user exists
-  user:
-    name: "{{ caddy_user }}"
-    group: "{{ caddy_group }}"
-    shell: /usr/sbin/nologin
-    home: /var/lib/caddy
+- name: Ensure caddy service user exists
+  include_role:
+    name: service_user
+  vars:
+    service_user_name: "{{ caddy_user }}"
 
 - name: Create caddy directories
   file:
