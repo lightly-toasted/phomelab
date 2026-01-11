@@ -40,7 +40,7 @@
   template:
     src: config.yml.j2
     dest: /etc/opengist/config.yml
-    mode: "0755"
+    mode: "0644"
 
 - name: Install s6 run script
   template:
