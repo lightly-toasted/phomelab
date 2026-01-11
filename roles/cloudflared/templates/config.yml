@@ -2,6 +2,8 @@ tunnel: {{ cloudflared_tunnel }}
 credentials-file: /etc/cloudflared/{{ cloudflared_tunnel }}.json
 
 ingress:
-  - hostname: gist.700457.xyz
-    service: http://localhost:{{ opengist_port }}
+{% for subdomain in cloudflared_subdomains %}
+  - hostname: {{ subdomain }}.{{ cloudflared_domain }}
+    service: http://localhost:{{ caddy_http_port }}
+{% endfor %}
   - service: http_status:404

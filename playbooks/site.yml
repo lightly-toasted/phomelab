@@ -13,4 +13,5 @@
     - { role: opengist, tags: [opengist] }
 
     # reverse proxies
+    - { role: caddy, tags: [caddy] }
     - { role: cloudflared, tags: [cloudflared] }

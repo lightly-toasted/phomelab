@@ -1,0 +1,43 @@
+---
+- name: Install caddy package
+  ansible.builtin.apt:
+    name:
+      - caddy
+
+- name: Ensure caddy group exists
+  group:
+    name: "{{ caddy_group }}"
+
+- name: Ensure caddy user exists
+  user:
+    name: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+    shell: /usr/sbin/nologin
+    home: /var/lib/caddy
+
+- name: Create caddy directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ caddy_user }}"
+    group: "{{ caddy_group }}"
+  loop:
+    - "/etc/caddy"
+
+- name: Create Caddyfile
+  template:
+    src: Caddyfile
+    dest: /etc/caddy/
+    mode: "0644"
+
+- name: Configure log service
+  include_role:
+    name: s6-log
+  vars:
+    s6_log_service_name: caddy
+
+- name: Create s6 run script
+  template:
+    src: run.j2
+    dest: /etc/services.d/caddy/run
+    mode: "0755"
