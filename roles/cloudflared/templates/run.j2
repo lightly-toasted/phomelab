@@ -1,2 +1,3 @@
 #!/bin/execlineb -P
+s6-setuidgid {{ cloudflared_user }}
 exec /opt/cloudflared/bin/cloudflared tunnel run
