@@ -14,6 +14,7 @@
   user:
     name: "{{ service_user_name }}"
     group: "{{ service_user_group }}"
+    groups: "{{ service_user_groups }}"
     shell: /usr/sbin/nologin
     home: "{{ service_user_home }}"
 
