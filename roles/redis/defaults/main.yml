@@ -1,3 +1,4 @@
 ---
 redis_user: redis
+redis_group: "{{ redis_user }}"
 redis_socket: /run/redis/redis.sock

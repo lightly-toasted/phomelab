@@ -10,7 +10,7 @@
     path: "/etc/redis"
     state: directory
     owner: "{{ redis_user }}"
-    group: "{{ redis_user }}"
+    group: "{{ redis_group }}"
 
 - name: Build Redis
   command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#redis -o /opt/redis
