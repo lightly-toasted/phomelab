@@ -3,4 +3,5 @@
   ansible.builtin.user:
     name: toast
     groups: sudo
+    append: true
     create_home: true
