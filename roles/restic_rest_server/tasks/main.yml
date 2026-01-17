@@ -21,6 +21,7 @@
     path: /etc/restic_rest_server/.htpasswd
     name: "{{ item.name }}"
     password: "{{ item.password }}"
+    hash_scheme: bcrypt
     owner: "{{ restic_rest_server_user }}"
     group: "{{ restic_rest_server_group }}"
     mode: "0640"
