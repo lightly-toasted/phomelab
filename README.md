@@ -6,3 +6,14 @@ Declarative configuration for my homelab using Ansible.
 
 ## Playbook
 
+
+## Usage
+```sh
+nix develop
+
+just ping
+just apply # run full Ansible playbook
+just check # dry-run
+just apply-tags TAGS # run playbook with specific tags
+
+```
