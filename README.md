@@ -15,5 +15,4 @@ just ping
 just apply # run full Ansible playbook
 just check # dry-run
 just apply-tags TAGS # run playbook with specific tags
-
 ```
