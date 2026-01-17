@@ -22,3 +22,8 @@ http://{{ paperless_ngx_hostname }} {
   # Paperless-ngx
   reverse_proxy http://localhost:{{ paperless_ngx_port }}
 }
+
+http://restic.ts.700457.xyz {
+  # restic rest-server
+  reverse_proxy http://localhost:{{ restic_rest_server_port }}
+}

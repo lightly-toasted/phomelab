@@ -1,0 +1,45 @@
+---
+- name: Set role secrets from vault
+  set_fact:
+    restic_rest_server_htpasswd_users: "{{ restic_rest_server.htpasswd_users }}"
+
+- name: Ensure restic rest-server service user exists
+  include_role:
+    name: service_user
+  vars:
+    service_user_name: "{{ restic_rest_server_user }}"
+
+- name: Ensure restic rest-server config directory exists
+  file:
+    path: "/etc/restic_rest_server"
+    state: directory
+    owner: "{{ restic_rest_server_user }}"
+    group: "{{ restic_rest_server_group }}"
+
+- name: Add users to .htpasswd
+  community.general.htpasswd:
+    path: /etc/restic_rest_server/.htpasswd
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    owner: "{{ restic_rest_server_user }}"
+    group: "{{ restic_rest_server_group }}"
+    mode: "0640"
+  loop: "{{ restic_rest_server_htpasswd_users }}"
+  no_log: true
+
+- name: Build restic rest-server
+  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#restic-rest-server -o /opt/restic_rest_server
+  args:
+    creates: /opt/restic_rest_server
+
+- name: Configure log service
+  include_role:
+    name: s6_log
+  vars:
+    s6_log_service_name: restic_rest_server
+
+- name: Create s6 run script
+  template:
+    src: run.j2
+    dest: /etc/services.d/restic_rest_server/run
+    mode: "0755"

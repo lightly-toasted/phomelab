@@ -1,0 +1,7 @@
+---
+restic_rest_server_user: restic_rest_server
+restic_rest_server_group: "{{ restic_rest_server_user }}"
+restic_rest_server_data_dir: /var/lib/{{ restic_rest_server_user }}
+restic_rest_server_port: "3003"
+restic_rest_server_htpasswd_users:
+  - { name: 'changeme', password: 'changeme' }

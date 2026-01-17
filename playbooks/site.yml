@@ -15,6 +15,7 @@
     - { role: glances, tags: [glances] }
     - { role: opengist, tags: [opengist] }
     - { role: paperless_ngx, tags: [paperless_ngx] }
+    - { role: restic_rest_server, tags: [restic_rest_server] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy] }
