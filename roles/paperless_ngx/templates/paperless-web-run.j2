@@ -1,0 +1,6 @@
+#!/bin/execlineb -P
+export PAPERLESS_CONFIG_PATH /etc/paperless.conf
+foreground { s6-svwait -u /etc/services.d/redis }
+
+s6-setuidgid {{ paperless_ngx_user }}
+/opt/paperless/bin/paperless-ngx runserver 127.0.0.1:{{ paperless_ngx_port }}

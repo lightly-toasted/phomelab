@@ -1,0 +1,44 @@
+---
+- name: Set role secrets from vault
+  set_fact:
+    paperless_ngx_secret_key: "{{ paperless_ngx.secret_key }}"
+
+- name: Ensure Paperless-ngx service user exists
+  include_role:
+    name: service_user
+  vars:
+    service_user_name: "{{ paperless_ngx_user }}"
+    service_user_groups: "redis"
+
+- name: Ensure Paperless-ngx directories exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ paperless_ngx_user }}"
+    group: "{{ paperless_ngx_user }}"
+  loop: "{{ paperless_ngx_dirs.values() | list }}"
+
+- name: Build Paperless-ngx
+  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#paperless-ngx -o {{ paperless_ngx_package_path }}
+  args:
+    creates: "{{ paperless_ngx_package_path }}"
+    
+- name: Create paperless.conf
+  template:
+    src: paperless.conf
+    dest: /etc/paperless.conf
+    mode: "0644"
+
+- name: Configure log services
+  include_role:
+    name: s6_log
+  vars:
+    s6_log_service_name: "{{ item }}"
+  loop: "{{ paperless_ngx_services }}"
+
+- name: Create s6 run scripts
+  template:
+    src: "{{ item }}-run.j2"
+    dest: "/etc/services.d/{{ item }}/run"
+    mode: "0755"
+  loop: "{{ paperless_ngx_services }}"

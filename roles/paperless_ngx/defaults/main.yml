@@ -1,0 +1,17 @@
+---
+paperless_ngx_user: paperless
+paperless_ngx_port: "3002"
+paperless_ngx_redis: "unix://{{ redis_socket }}"
+paperless_ngx_hostname: paperless.ts.700457.xyz
+paperless_ngx_secret_key: "__CHANGE_ME__"
+
+paperless_ngx_data_root: /var/lib/paperless
+paperless_ngx_dirs:
+  media: "{{ paperless_ngx_data_root }}/media"
+  trash: "{{ paperless_ngx_data_root }}/media/trash"
+  data: "{{ paperless_ngx_data_root }}/data"
+  consume: "{{ paperless_ngx_data_root }}/consume"
+paperless_ngx_package_path: /opt/paperless
+
+paperless_ngx_ocr_language: kor
+paperless_ngx_time_zone: Asia/Seoul

@@ -1,0 +1,7 @@
+---
+paperless_ngx_services:
+  - paperless-web
+  - paperless-worker
+  - paperless-beat
+  - paperless-consumer
+paperless_ngx_static_dir: "{{ paperless_ngx_package_path }}/lib/paperless-ngx/static"

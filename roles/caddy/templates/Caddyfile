@@ -17,3 +17,8 @@ http://glances.ts.700457.xyz {
   # Glances
   reverse_proxy http://localhost:61208
 }
+
+http://{{ paperless_ngx_hostname }} {
+  # Paperless-ngx
+  reverse_proxy http://localhost:{{ paperless_ngx_port }}
+}
