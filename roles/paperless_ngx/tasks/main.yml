@@ -1,8 +1,4 @@
 ---
-- name: Set role secrets from vault
-  set_fact:
-    paperless_ngx_secret_key: "{{ paperless_ngx.secret_key }}"
-
 - name: Ensure Paperless-ngx service user exists
   include_role:
     name: service_user

@@ -1,8 +1,4 @@
 ---
-- name: Set role secrets from vault
-  set_fact:
-    restic_rest_server_htpasswd_users: "{{ restic_rest_server.htpasswd_users }}"
-
 - name: Ensure restic rest-server service user exists
   include_role:
     name: service_user
