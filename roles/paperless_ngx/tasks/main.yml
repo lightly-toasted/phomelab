@@ -11,7 +11,7 @@
     s6_service_name: "{{ service.name }}"
     s6_service_command: "{{ service.command }}"
     s6_service_user_name: "{{ paperless_ngx_user }}"
-    s6_service_user_groups: "redis"
+    s6_service_user_groups: "{{ paperless_ngx_user_groups }}"
     s6_service_env: { PAPERLESS_CONFIG_PATH: /etc/paperless.conf }
     s6_service_dependencies: [ redis ]
   loop: "{{ paperless_ngx_services }}"

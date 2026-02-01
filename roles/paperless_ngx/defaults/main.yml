@@ -1,5 +1,6 @@
 ---
 paperless_ngx_user: paperless
+paperless_ngx_user_groups: redis
 paperless_ngx_port: "3002"
 paperless_ngx_redis: "unix://{{ redis_socket }}"
 paperless_ngx_hostname: paperless.ts.700457.xyz
