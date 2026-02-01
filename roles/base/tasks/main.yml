@@ -14,6 +14,5 @@
       - vim
       - mosh
       - git
-      - s6
       - daemontools
     state: present
