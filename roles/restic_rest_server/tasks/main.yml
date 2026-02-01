@@ -1,9 +1,22 @@
 ---
-- name: Ensure restic rest-server service user exists
+- name: Build restic rest-server
+  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#restic-rest-server -o /opt/restic_rest_server
+  args:
+    creates: /opt/restic_rest_server
+
+- name: Create s6 service
   include_role:
-    name: service_user
+    name: s6_service
   vars:
-    service_user_name: "{{ restic_rest_server_user }}"
+    s6_service_name: restic_rest_server
+    s6_service_command: |
+      exec /opt/restic_rest_server/bin/rest-server \
+        --listen "127.0.0.1:{{ restic_rest_server_port }}" \
+        --log - \
+        --path {{ restic_rest_server_data_dir }}
+        --htpasswd-file /etc/restic_rest_server/.htpasswd
+        --private-repos
+    s6_service_user_name: "{{ restic_rest_server_user }}"
 
 - name: Ensure restic rest-server config directory exists
   file:
@@ -24,19 +37,3 @@
   loop: "{{ restic_rest_server_htpasswd_users }}"
   no_log: true
 
-- name: Build restic rest-server
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#restic-rest-server -o /opt/restic_rest_server
-  args:
-    creates: /opt/restic_rest_server
-
-- name: Configure log service
-  include_role:
-    name: s6_log
-  vars:
-    s6_log_service_name: restic_rest_server
-
-- name: Create s6 run script
-  template:
-    src: run.j2
-    dest: /etc/services.d/restic_rest_server/run
-    mode: "0755"

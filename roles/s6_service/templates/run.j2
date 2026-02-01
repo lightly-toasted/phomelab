@@ -1,0 +1,16 @@
+#!/bin/execlineb -P
+{{ s6_service_pre_exec }}
+
+{% for dep in s6_service_dependencies %}
+foreground { s6-svwait -u {{ dep }} }
+
+{% endfor %}
+{% if s6_service_env | length > 0 %}
+s6-envdir {{ s6_service_envdir }}
+
+{% endif %}
+{% if s6_service_create_user %}
+s6-setuidgid {{ s6_service_user_name }}
+
+{% endif %}
+{{ s6_service_command }}

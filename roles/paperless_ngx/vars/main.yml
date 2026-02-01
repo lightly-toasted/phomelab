@@ -1,7 +1,12 @@
 ---
 paperless_ngx_services:
-  - paperless-web
-  - paperless-worker
-  - paperless-beat
-  - paperless-consumer
+  - name: paperless-web
+    command: "exec /opt/paperless/bin/paperless-ngx runserver 127.0.0.1:{{ paperless_ngx_port }}"
+  - name: paperless-worker
+    command: "exec /opt/paperless/bin/celery --app paperless worker --loglevel INFO"
+  - name: paperless-beat
+    command: "exec /opt/paperless/bin/celery --app paperless beat --loglevel INFO"
+  - name: paperless-consumer
+    command: "exec /opt/paperless/bin/paperless-ngx document_consumer"
+
 paperless_ngx_static_dir: "{{ paperless_ngx_package_path }}/lib/paperless-ngx/static"

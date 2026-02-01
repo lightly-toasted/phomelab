@@ -1,9 +1,16 @@
 ---
-- name: Ensure cloudflared service user exists
+- name: Build cloudflared
+  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#cloudflared -o /opt/cloudflared
+  args:
+    creates: /opt/cloudflared
+
+- name: Create s6 service
   include_role:
-    name: service_user
+    name: s6_service
   vars:
-    service_user_name: "{{ cloudflared_user }}"
+    s6_service_name: cloudflared
+    s6_service_command: "exec /opt/cloudflared/bin/cloudflared tunnel run"
+    s6_service_user_name: "{{ cloudflared_user }}"
 
 - name: Create cloudflared directories
   file:
@@ -13,11 +20,6 @@
     group: "{{ cloudflared_group }}"
   loop:
     - "/etc/cloudflared"
-
-- name: Build cloudflared
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#cloudflared -o /opt/cloudflared
-  args:
-    creates: /opt/cloudflared
 
 - name: Copy cloudflared files
   copy:
@@ -34,14 +36,3 @@
     dest: /etc/cloudflared
     mode: "0644"
   
-- name: Configure log service
-  include_role:
-    name: s6_log
-  vars:
-    s6_log_service_name: cloudflared
-
-- name: Create s6 run script
-  template:
-    src: run.j2
-    dest: /etc/services.d/cloudflared/run
-    mode: "0755"

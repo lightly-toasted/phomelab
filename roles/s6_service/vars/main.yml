@@ -1,0 +1,2 @@
+---
+s6_service_services_dir: /etc/services.d

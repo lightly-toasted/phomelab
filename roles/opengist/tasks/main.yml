@@ -1,23 +1,4 @@
 ---
-- name: Ensure Opengist service user exists
-  include_role:
-    name: service_user
-  vars:
-    service_user_name: "{{ opengist_user }}"
-    service_user_group: "{{ opengist_group }}"
-    service_user_home: /var/lib/opengist
-
-- name: Ensure Opengist directories exists
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ opengist_user }}"
-    group: "{{ opengist_group }}"
-  loop:
-    - "/opt/opengist"
-    - "/var/lib/opengist"
-    - "/etc/opengist"
-
 - name: Fetch Opengist tarball
   get_url:
     url: "{{ opengist_url }}"
@@ -33,21 +14,30 @@
     extra_opts:
       - --strip-components=1
 
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: opengist
+    s6_service_command: "exec /opt/opengist/opengist --config /etc/opengist/config.yml start"
+    s6_service_user_name: "{{ opengist_user }}"
+    s6_service_user_group: "{{ opengist_group }}"
+    s6_service_user_home: /var/lib/opengist
+
+- name: Ensure Opengist directories exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ opengist_user }}"
+    group: "{{ opengist_group }}"
+  loop:
+    - "/opt/opengist"
+    - "/var/lib/opengist"
+    - "/etc/opengist"
+
 - name: Create config.yml
   template:
     src: config.yml.j2
     dest: /etc/opengist/config.yml
     mode: "0644"
-
-- name: Create s6 run script
-  template:
-    src: run.j2
-    dest: /etc/services.d/opengist/run
-    mode: "0755"
-
-- name: Configure log service
-  include_role:
-    name: s6_log
-  vars:
-    s6_log_service_name: opengist
 

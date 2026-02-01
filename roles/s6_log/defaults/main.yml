@@ -1,3 +1,0 @@
----
-s6_log_directory: "/etc/services.d/{{ s6_log_service_name }}/log"
-s6_log_output_dir: "{{ s6_log_directory }}/main"

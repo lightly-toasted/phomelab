@@ -1,0 +1,23 @@
+---
+s6_service_name: ""
+s6_service_command: ""
+s6_service_pre_exec: "" # command that runs before switching user
+s6_service_dir: "{{ s6_service_services_dir }}/{{ s6_service_name }}"
+
+s6_service_enable_logs: true
+s6_service_log_dir: "{{ s6_service_dir }}/log"
+s6_service_log_output_dir: "{{ s6_service_log_dir }}/main"
+
+s6_service_create_user: true
+s6_service_user_name: "{{ s6_service_name }}"
+s6_service_user_group: "{{ s6_service_user_name }}"
+s6_service_user_groups: ""
+s6_service_user_home: "/var/lib/{{ s6_service_user_name }}"
+s6_service_user_shell: /sbin/nologin
+
+s6_service_env: {}
+s6_service_env_no_log: false
+s6_service_envdir: "{{ s6_service_dir }}/env"
+
+# Optional dependencies - list of full paths to service directories
+s6_service_dependencies: []
