@@ -1,0 +1,15 @@
+---
+- name: Ensure required variables are provided
+  ansible.builtin.assert:
+    that:
+      - nix_build_attr | length > 0
+      - nix_build_out | length > 0
+    fail_msg: "nix_build_attr and nix_build_out must be set"
+
+- name: Build nix package
+  command: >-
+    {{ nix_bin }} build
+    {% if nix_build_inputs_from | length > 0 %}
+    --inputs-from {{ nix_build_inputs_from }}
+    {% endif %}
+    {{ nix_build_attr }} -o {{ nix_build_out }}
