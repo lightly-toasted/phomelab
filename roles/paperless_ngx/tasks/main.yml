@@ -1,8 +1,10 @@
 ---
 - name: Build Paperless-ngx
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#paperless-ngx -o {{ paperless_ngx_package_path }}
-  args:
-    creates: "{{ paperless_ngx_package_path }}"
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#paperless-ngx
+    nix_build_out: "{{ paperless_ngx_package_path }}"
     
 - name: Create s6 services
   include_role:

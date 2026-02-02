@@ -1,8 +1,10 @@
 ---
 - name: Build glances
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#glances -o /opt/glances
-  args:
-    creates: /opt/glances
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#glances
+    nix_build_out: /opt/glances
 
 - name: Create s6 service
   include_role:

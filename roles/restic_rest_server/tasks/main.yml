@@ -1,8 +1,10 @@
 ---
 - name: Build restic rest-server
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#restic-rest-server -o /opt/restic_rest_server
-  args:
-    creates: /opt/restic_rest_server
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#restic-rest-server
+    nix_build_out: /opt/restic_rest_server
 
 - name: Create s6 service
   include_role:

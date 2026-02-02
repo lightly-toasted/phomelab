@@ -1,8 +1,10 @@
 ---
 - name: Build cloudflared
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#cloudflared -o /opt/cloudflared
-  args:
-    creates: /opt/cloudflared
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#cloudflared
+    nix_build_out: /opt/cloudflared
 
 - name: Create s6 service
   include_role:

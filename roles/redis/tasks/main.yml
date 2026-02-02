@@ -1,8 +1,10 @@
 ---
 - name: Build Redis
-  command: /nix/var/nix/profiles/default/bin/nix build nixpkgs#redis -o /opt/redis
-  args:
-    creates: /opt/redis
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#redis
+    nix_build_out: /opt/redis
 
 - name: Create s6 service
   include_role:
