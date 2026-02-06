@@ -29,7 +29,7 @@
 
     - name: Create log service run script
       ansible.builtin.template:
-        src: run.j2
+        src: log-run.j2
         dest: "{{ s6_service_log_dir }}/run"
         mode: "0755"
 

@@ -1,0 +1,33 @@
+---
+- name: Ensure backup script directories exist
+  ansible.builtin.file:
+    path: "/opt/backups/{{ item.name }}"
+    state: directory
+    mode: "0755"
+  loop: "{{ backups }}"
+  no_log: true
+
+- name: Deploy backup scripts
+  ansible.builtin.template:
+    src: "backup.sh.j2"
+    dest: "/opt/backups/{{ item.name }}/backup.sh"
+    mode: "0700"
+  loop: "{{ backups }}"
+  no_log: true
+
+- name: Create backup services
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: "backup_{{ backup.name }}"
+    s6_service_command: |
+      exec {{ snooze_package_path }}/bin/snooze \
+        {{ backup.snooze_args }} -t /opt/backups/{{ backup.name }}/timefile \
+        /opt/backups/{{ backup.name }}/backup.sh
+    s6_service_create_user: false
+    s6_service_env: "{{ backup.env }}"
+    s6_service_env_no_log: true
+  loop: "{{ backups }}"
+  loop_control:
+    loop_var: backup
+  no_log: true

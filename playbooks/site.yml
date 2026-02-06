@@ -16,6 +16,7 @@
     - { role: opengist, tags: [opengist, service] }
     - { role: paperless_ngx, tags: [paperless_ngx, service] }
     - { role: restic_rest_server, tags: [restic_rest_server, service] }
+    - { role: backups, tags: [backups, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

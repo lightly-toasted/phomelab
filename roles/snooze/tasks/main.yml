@@ -1,0 +1,8 @@
+---
+- name: Build snooze
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#snooze
+    nix_build_out: /opt/snooze
+

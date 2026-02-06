@@ -1,0 +1,8 @@
+---
+- name: Build restic
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#restic
+    nix_build_out: /opt/restic
+

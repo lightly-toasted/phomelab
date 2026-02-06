@@ -1,0 +1,20 @@
+---
+backups:
+  - name: example_backup
+    paths:
+      - "/home/toast"
+      - "/etc"
+    restic_repo: "rest:http://localhost:3003/mybackup/"
+    exclude:
+      - "/home/toast/.cache"
+    restic_prune_opts: # options for restic forget --prune
+      - "--keep-daily 7"
+      - "--keep-weekly 5"
+      - "--keep-monthly 12"
+      - "--keep-yearly 3"
+    snooze_args: "-H'*'" # scheduling 
+    env:
+      RESTIC_PASSWORD: supersecret
+      RESTIC_REST_USERNAME: changeme
+      RESTIC_REST_PASSWORD: changeme
+

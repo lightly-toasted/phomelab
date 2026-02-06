@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# vim: ft=sh
+
+set -euo pipefail
+
+TIMEFILE=/opt/backups/{{ item.name }}/timefile
+
+touch "$TIMEFILE"
+
+{{ restic_package_path }}/bin/restic backup \
+  {% for path in item.paths %}"{{ path }}" {% endfor %}\
+  --repo {{ item.restic_repo }} \
+  {% if item.exclude is defined and item.exclude %}
+  {% for ex in item.exclude %}--exclude "{{ ex }}" {% endfor %}
+  {% endif %}
+
+{% if item.restic_prune_opts is defined and item.restic_prune_opts | length > 0 %}
+{{ restic_package_path }}/bin/restic forget --prune \
+  --repo {{ item.restic_repo }}
+  {{ item.restic_prune_opts | join(' ') }}
+{% endif %}
+
+touch "$TIMEFILE"
+
+exit 0
+
+
