@@ -9,14 +9,14 @@
     - { role: nix, tags: [nix] }
 
     # databases
-    - { role: redis, tags: [redis] }
+    - { role: redis, tags: [redis, service] }
 
     # services
-    - { role: glances, tags: [glances] }
-    - { role: opengist, tags: [opengist] }
-    - { role: paperless_ngx, tags: [paperless_ngx] }
-    - { role: restic_rest_server, tags: [restic_rest_server] }
+    - { role: glances, tags: [glances, service] }
+    - { role: opengist, tags: [opengist, service] }
+    - { role: paperless_ngx, tags: [paperless_ngx, service] }
+    - { role: restic_rest_server, tags: [restic_rest_server, service] }
 
     # reverse proxies
-    - { role: caddy, tags: [caddy] }
-    - { role: cloudflared, tags: [cloudflared] }
+    - { role: caddy, tags: [caddy, service] }
+    - { role: cloudflared, tags: [cloudflared, service] }
