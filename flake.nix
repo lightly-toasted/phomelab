@@ -3,15 +3,18 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = (import (inputs.nixpkgs) { inherit system; });
-      in {
-        devShell = pkgs.mkShell {
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      
+      perSystem = { pkgs, system, ... }: {
+        devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             ansible
             just
@@ -21,6 +24,6 @@
             ansible --version
           '';
         };
-      }
-  );
+      };
+    };
 }
