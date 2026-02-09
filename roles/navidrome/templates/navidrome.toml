@@ -1,0 +1,4 @@
+MusicFolder = '{{ navidrome_music_dir }}'
+DataFolder = '{{ navidrome_data_dir }}'
+CacheFolder = '{{ navidrome_cache_dir }}'
+Port = '{{ navidrome_port }}'

@@ -1,0 +1,10 @@
+---
+navidrome_user: navidrome
+navidrome_group: navidrome
+navidrome_port: "3004"
+
+navidrome_dir: /var/lib/navidrome
+navidrome_music_dir: "{{ navidrome_dir }}/music"
+navidrome_data_dir: "{{ navidrome_dir }}/data"
+navidrome_cache_dir: "{{ navidrome_data_dir }}/cache"
+
