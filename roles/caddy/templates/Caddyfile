@@ -27,3 +27,8 @@ http://restic.ts.700457.xyz {
   # restic rest-server
   reverse_proxy http://localhost:{{ restic_rest_server_port }}
 }
+
+http://music.ts.700457.xyz {
+  # Navidrome
+  reverse_proxy http://localhost:{{ navidrome_port }}
+}

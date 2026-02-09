@@ -1,0 +1,37 @@
+---
+- name: Build Navidrome
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#navidrome
+    nix_build_out: /opt/navidrome
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: navidrome
+    s6_service_command: 'exec /opt/navidrome/bin/navidrome --configfile "/etc/navidrome/navidrome.toml"'
+    s6_service_user_name: "{{ navidrome_user }}"
+    s6_service_user_group: "{{ navidrome_group }}"
+
+- name: Ensure Navidrome directories exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ navidrome_user }}"
+    group: "{{ navidrome_group }}"
+  loop:
+    - /etc/navidrome
+    - "{{ navidrome_dir }}"
+    - "{{ navidrome_music_dir }}"
+    - "{{ navidrome_data_dir }}"
+    - "{{ navidrome_cache_dir }}"
+    
+- name: Create navidrome.toml
+  template:
+    src: navidrome.toml
+    dest: /etc/navidrome/
+    owner: "{{ navidrome_user }}"
+    group: "{{ navidrome_group }}"
+    mode: "0644"
