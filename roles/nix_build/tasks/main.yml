@@ -12,11 +12,32 @@
     state: absent
   when: nix_build_state == "absent"
 
-- name: Build nix package if state is present
-  command: >-
-    {{ nix_bin }} build
-    {% if nix_build_inputs_from | length > 0 %}
-    --inputs-from {{ nix_build_inputs_from }}
-    {% endif %}
-    {{ nix_build_attr }} -o {{ nix_build_out }}
+- name: Ensure nix package is built if present
+  block:
+    - name: Check current nix build output before build
+      ansible.builtin.stat:
+        path: "{{ nix_build_out }}"
+        follow: false
+      register: nix_build_out_stat
+
+    - name: Store current link target
+      ansible.builtin.set_fact:
+        old_link_target: "{{ nix_build_out_stat.stat.lnk_source | default('') }}"
+
+    - name: Build nix package if state is present
+      ansible.builtin.command: >-
+        {{ nix_bin }} build
+        {% if nix_build_inputs_from is defined and nix_build_inputs_from | length > 0 %}
+        --inputs-from {{ nix_build_inputs_from }}
+        {% endif %}
+        {{ nix_build_attr }} -o {{ nix_build_out }}
+      changed_when: false
+
+    - name: Check current nix build output after build
+      ansible.builtin.stat:
+        path: "{{ nix_build_out }}"
+        follow: false
+      register: nix_build_out_stat_after
+      changed_when: >
+        old_link_target != nix_build_out_stat_after.stat.lnk_source
   when: nix_build_state == "present"
