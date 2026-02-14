@@ -26,4 +26,5 @@
     src: Caddyfile
     dest: /etc/caddy/
     mode: "0644"
+    validate: caddy validate --config %s
 
