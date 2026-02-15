@@ -1,0 +1,5 @@
+---
+- name: Reload s6 services
+  ansible.builtin.command:
+    cmd: "s6-svscanctl -h {{ s6_service_services_dir }}"
+

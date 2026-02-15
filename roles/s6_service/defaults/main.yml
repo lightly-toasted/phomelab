@@ -1,6 +1,7 @@
 ---
 s6_service_name: ""
 s6_service_command: ""
+s6_service_state: present
 s6_service_pre_exec: "" # command that runs before switching user
 s6_service_dir: "{{ s6_service_services_dir }}/{{ s6_service_name }}"
 

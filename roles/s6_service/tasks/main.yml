@@ -2,42 +2,15 @@
 - name: Ensure required variables are provided
   ansible.builtin.assert:
     that:
+      - s6_service_name is defined
       - s6_service_name | length > 0
-      - s6_service_command | length > 0
-    fail_msg: "s6_service_name and s6_service_command must be set"
+    fail_msg: "s6_service_name must be set"
 
-- name: Ensure s6 service directory exists
-  ansible.builtin.file:
-    path: "{{ s6_service_dir }}"
-    state: directory
-    mode: "0755"
-
-- name: Create s6 run script
-  template:
-    src: run.j2
-    dest: "{{ s6_service_dir }}/run"
-    mode: "0755"
-
-- name: Configure s6 log service
-  when: s6_service_enable_logs
-  block:
-    - name: Ensure s6 log directory exists
-      ansible.builtin.file:
-        path: "{{ s6_service_log_dir }}"
-        state: directory
-        mode: "0755"
-
-    - name: Create log service run script
-      ansible.builtin.template:
-        src: log-run.j2
-        dest: "{{ s6_service_log_dir }}/run"
-        mode: "0755"
-
-    - name: Ensure log output directory exists
-      ansible.builtin.file:
-        path: "{{ s6_service_log_output_dir }}"
-        state: directory
-        mode: "0755"
+- name: Ensure valid service state
+  ansible.builtin.assert:
+    that:
+      - s6_service_state in ['present', 'absent']
+    fail_msg: "s6_service_state must be 'present' or 'absent'"
 
 - name: Configure service user
   when: s6_service_create_user
@@ -49,32 +22,100 @@
           - s6_service_user_name | length > 0
         fail_msg: "s6_service_user_name must be defined"
 
-    - name: Ensure service group exists
-      group:
+    - name: Ensure service group is {{ s6_service_state }}
+      ansible.builtin.group:
         name: "{{ s6_service_user_group }}"
+        state: "{{ s6_service_state }}"
+        force: true
 
-    - name: Ensure service user exists
-      user:
+    - name: Ensure service user is {{ s6_service_state }}
+      ansible.builtin.user:
         name: "{{ s6_service_user_name }}"
         group: "{{ s6_service_user_group }}"
         groups: "{{ s6_service_user_groups }}"
         shell: "{{ s6_service_user_shell }}"
         home: "{{ s6_service_user_home }}"
+        state: "{{ s6_service_state }}"
+        force: true
 
-- name: Create envdir directory
-  when: s6_service_env | length > 0
+- name: Ensure s6 service is absent
+  when: s6_service_state == "absent"
   block:
-    - name: Ensure envdir directory exists
+    - name: Ensure service directories are absent
       ansible.builtin.file:
-        path: "{{ s6_service_envdir }}"
-        state: directory
-        mode: "0750"
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ s6_service_dir }}"
+        - "{{ s6_service_log_dir }}"
+        - "{{ s6_service_log_output_dir }}"
+        - "{{ s6_service_envdir }}"
+      notify: Reload s6 services
 
-    - name: Create environment files
-      ansible.builtin.copy:
-        dest: "{{ s6_service_envdir }}/{{ item.key }}"
-        content: "{{ item.value }}"
-        mode: "0640"
-      loop: "{{ s6_service_env | dict2items }}"
-      no_log: "{{ s6_service_env_no_log }}"
+- name: Ensure s6 service is present
+  when: s6_service_state == "present"
+  block:
+    - name: Ensure s6_service_command is provided
+      ansible.builtin.assert:
+        that:
+          - s6_service_command is defined
+          - s6_service_command | length > 0
+        fail_msg: "s6_service_command must be set when state is present"
+
+    - name: Ensure s6 service directory exists
+      ansible.builtin.file:
+        path: "{{ s6_service_dir }}"
+        state: directory
+        mode: "0755"
+      notify: Reload s6 services
+
+    - name: Create s6 run script
+      ansible.builtin.template:
+        src: run.j2
+        dest: "{{ s6_service_dir }}/run"
+        mode: "0755"
+      notify: Reload s6 services
+
+    - name: Configure s6 log service
+      when: s6_service_enable_logs
+      block:
+        - name: Ensure s6 log directory exists
+          ansible.builtin.file:
+            path: "{{ s6_service_log_dir }}"
+            state: directory
+            mode: "0755"
+          notify: Reload s6 services
+
+        - name: Create log service run script
+          ansible.builtin.template:
+            src: log-run.j2
+            dest: "{{ s6_service_log_dir }}/run"
+            mode: "0755"
+          notify: Reload s6 services
+
+        - name: Ensure log output directory exists
+          ansible.builtin.file:
+            path: "{{ s6_service_log_output_dir }}"
+            state: directory
+            mode: "0755"
+          notify: Reload s6 services
+
+    - name: Create envdir directory
+      when: s6_service_env | length > 0
+      block:
+        - name: Ensure envdir directory exists
+          ansible.builtin.file:
+            path: "{{ s6_service_envdir }}"
+            state: directory
+            mode: "0750"
+          notify: Reload s6 services
+
+        - name: Create environment files
+          ansible.builtin.copy:
+            dest: "{{ s6_service_envdir }}/{{ item.key }}"
+            content: "{{ item.value }}"
+            mode: "0640"
+          loop: "{{ s6_service_env | dict2items }}"
+          no_log: "{{ s6_service_env_no_log }}"
+          notify: Reload s6 services
 
