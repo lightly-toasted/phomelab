@@ -1,16 +1,22 @@
 ---
+- name: Set Paperless-ngx state fact
+  ansible.builtin.set_fact:
+    paperless_state: "{{ 'present' if paperless_enabled else 'absent' }}"
+
 - name: Build Paperless-ngx
   include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#paperless-ngx
     nix_build_out: "{{ paperless_ngx_package_path }}"
+    nix_build_state: "{{ paperless_state }}"
     
 - name: Create s6 services
   include_role:
     name: s6_service
   vars:
     s6_service_name: "{{ service.name }}"
+    s6_service_state: "{{ paperless_state }}"
     s6_service_command: "{{ service.command }}"
     s6_service_user_name: "{{ paperless_ngx_user }}"
     s6_service_user_groups: "{{ paperless_ngx_user_groups }}"
@@ -20,15 +26,18 @@
   loop_control:
     loop_var: service
 
-- name: Ensure Paperless-ngx directories exists
+- name: Ensure Paperless-ngx directories exist
+  when: paperless_enabled
   file:
     path: "{{ item }}"
     state: directory
     owner: "{{ paperless_ngx_user }}"
     group: "{{ paperless_ngx_user }}"
+    recurse: true
   loop: "{{ paperless_ngx_dirs.values() | list }}"
 
 - name: Create paperless.conf
+  when: paperless_enabled
   template:
     src: paperless.conf
     dest: /etc/paperless.conf

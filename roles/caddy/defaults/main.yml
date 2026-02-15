@@ -1,4 +1,5 @@
 ---
+caddy_enabled: false
 caddy_user: caddy
 caddy_group: caddy
 caddy_http_port: "8080"

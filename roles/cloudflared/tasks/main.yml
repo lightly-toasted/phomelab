@@ -1,10 +1,15 @@
 ---
+- name: Set cloudflared state fact
+  ansible.builtin.set_fact:
+    cloudflared_state: "{{ 'present' if cloudflared_enabled else 'absent' }}"
+
 - name: Build cloudflared
   include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#cloudflared
     nix_build_out: /opt/cloudflared
+    nix_build_state: "{{ cloudflared_state }}"
 
 - name: Create s6 service
   include_role:
@@ -13,17 +18,21 @@
     s6_service_name: cloudflared
     s6_service_command: "exec /opt/cloudflared/bin/cloudflared tunnel run"
     s6_service_user_name: "{{ cloudflared_user }}"
+    s6_service_state: "{{ cloudflared_state }}"
 
-- name: Create cloudflared directories
+- name: Ensure cloudflared directories exist
+  when: cloudflared_enabled
   file:
     path: "{{ item }}"
     state: directory
     owner: "{{ cloudflared_user }}"
     group: "{{ cloudflared_group }}"
+    recurse: true
   loop:
     - "/etc/cloudflared"
 
 - name: Copy cloudflared files
+  when: cloudflared_enabled
   copy:
     src: "{{ item }}"
     dest: /etc/cloudflared/
@@ -33,6 +42,7 @@
     - cert.pem
 
 - name: Create config.yml
+  when: cloudflared_enabled
   template:
     src: config.yml
     dest: /etc/cloudflared

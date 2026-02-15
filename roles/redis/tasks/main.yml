@@ -1,10 +1,15 @@
 ---
+- name: Set Redis state fact
+  ansible.builtin.set_fact:
+    redis_state: "{{ 'present' if redis_enabled else 'absent' }}"
+
 - name: Build Redis
   include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#redis
     nix_build_out: /opt/redis
+    nix_build_state: "{{ redis_state }}"
 
 - name: Create s6 service
   include_role:
@@ -22,16 +27,20 @@
     s6_service_env:
       LANG: c
       LC_ALL: C
+    s6_service_state: "{{ redis_state }}"
 
-- name: Ensure Redis config directories exists
-  file:
+- name: Ensure Redis config directories exist
+  when: redis_enabled
+  ansible.builtin.file:
     path: "/etc/redis"
     state: directory
     owner: "{{ redis_user }}"
     group: "{{ redis_group }}"
+    recurse: true
 
 - name: Create redis.conf
-  template:
+  when: redis_enabled
+  ansible.builtin.template:
     src: redis.conf
     dest: /etc/redis/
     mode: "0644"

@@ -1,20 +1,9 @@
 ---
-- name: Fetch Opengist tarball
-  get_url:
-    url: "{{ opengist_url }}"
-    dest: "{{ opengist_tarball }}"
-    checksum: "sha256:{{ opengist_sha256 }}"
+- name: Set opengist state fact
+  ansible.builtin.set_fact:
+    opengist_state: "{{ 'present' if opengist_enabled else 'absent' }}"
 
-- name: Extract tarball
-  unarchive:
-    src: "{{ opengist_tarball }}"
-    dest: "/opt/opengist"
-    remote_src: true
-    creates: "/opt/opengist/opengist"
-    extra_opts:
-      - --strip-components=1
-
-- name: Create s6 service
+- name: Ensure s6 service is {{ opengist_state }}
   include_role:
     name: s6_service
   vars:
@@ -23,19 +12,40 @@
     s6_service_user_name: "{{ opengist_user }}"
     s6_service_user_group: "{{ opengist_group }}"
     s6_service_user_home: /var/lib/opengist
+    s6_service_state: "{{ opengist_state }}"
 
-- name: Ensure Opengist directories exists
+- name: Ensure Opengist directories exist
+  when: opengist_enabled
   file:
     path: "{{ item }}"
     state: directory
     owner: "{{ opengist_user }}"
     group: "{{ opengist_group }}"
+    recurse: true
   loop:
     - "/opt/opengist"
     - "/var/lib/opengist"
     - "/etc/opengist"
 
+- name: Fetch Opengist tarball
+  when: opengist_enabled
+  get_url:
+    url: "{{ opengist_url }}"
+    dest: "{{ opengist_tarball }}"
+    checksum: "sha256:{{ opengist_sha256 }}"
+
+- name: Extract tarball
+  when: opengist_enabled
+  unarchive:
+    src: "{{ opengist_tarball }}"
+    dest: "/opt/opengist"
+    remote_src: true
+    creates: "/opt/opengist/opengist"
+    extra_opts:
+      - --strip-components=1
+
 - name: Create config.yml
+  when: opengist_enabled
   template:
     src: config.yml.j2
     dest: /etc/opengist/config.yml

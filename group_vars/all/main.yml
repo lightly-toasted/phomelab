@@ -1,4 +1,14 @@
 ---
+glances_enabled: true
+opengist_enabled: true
+paperless_enabled: true
+restic_rest_server_enabled: true
+backups_enabled: true
+navidrome_enabled: true
+caddy_enabled: true
+cloudflared_enabled: true
+
+
 caddy_caddyfile: |
   {
     http_port {{ caddy_http_port }}
@@ -28,4 +38,9 @@ caddy_caddyfile: |
   http://restic.ts.700457.xyz {
     # restic rest-server
     reverse_proxy http://localhost:{{ restic_rest_server_port }}
+  }
+
+  http://music.ts.700457.xyz {
+    # Navidrome
+    reverse_proxy http://localhost:{{ navidrome_port }}
   }

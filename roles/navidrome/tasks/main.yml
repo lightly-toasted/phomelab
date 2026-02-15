@@ -1,10 +1,15 @@
 ---
+- name: Set Navidrome state fact
+  ansible.builtin.set_fact:
+    navidrome_state: "{{ 'present' if navidrome_enabled else 'absent' }}"
+
 - name: Build Navidrome
   include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#navidrome
     nix_build_out: /opt/navidrome
+    nix_build_state: "{{ navidrome_state }}"
 
 - name: Create s6 service
   include_role:
@@ -14,13 +19,16 @@
     s6_service_command: 'exec /opt/navidrome/bin/navidrome --configfile "/etc/navidrome/navidrome.toml"'
     s6_service_user_name: "{{ navidrome_user }}"
     s6_service_user_group: "{{ navidrome_group }}"
+    s6_service_state: "{{ navidrome_state }}"
 
-- name: Ensure Navidrome directories exists
+- name: Ensure Navidrome directories exist
+  when: navidrome_enabled
   file:
     path: "{{ item }}"
     state: directory
     owner: "{{ navidrome_user }}"
     group: "{{ navidrome_group }}"
+    recurse: true
   loop:
     - /etc/navidrome
     - "{{ navidrome_dir }}"
@@ -29,6 +37,7 @@
     - "{{ navidrome_cache_dir }}"
     
 - name: Create navidrome.toml
+  when: navidrome_enabled
   template:
     src: navidrome.toml
     dest: /etc/navidrome/

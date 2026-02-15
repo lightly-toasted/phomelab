@@ -1,4 +1,5 @@
 ---
+navidrome_enabled: false
 navidrome_user: navidrome
 navidrome_group: navidrome
 navidrome_port: "3004"

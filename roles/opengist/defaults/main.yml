@@ -1,4 +1,5 @@
 ---
+opengist_enabled: false
 opengist_version: "1.11.1"
 opengist_arch: arm64
 opengist_url: "https://github.com/thomiceli/opengist/releases/download/v{{ opengist_version }}/opengist{{ opengist_version }}-linux-{{ opengist_arch }}.tar.gz"
