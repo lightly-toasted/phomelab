@@ -1,10 +1,15 @@
 ---
+- name: Set restic rest-server state fact
+  ansible.builtin.set_fact:
+    restic_rest_server_state: "{{ 'present' if restic_rest_server_enabled else 'absent' }}"
+
 - name: Build restic rest-server
   include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#restic-rest-server
     nix_build_out: /opt/restic_rest_server
+    nix_build_state: "{{ restic_rest_server_state }}"
 
 - name: Create s6 service
   include_role:
@@ -19,15 +24,19 @@
         --htpasswd-file /etc/restic_rest_server/.htpasswd
         --private-repos
     s6_service_user_name: "{{ restic_rest_server_user }}"
+    s6_service_state: "{{ restic_rest_server_state }}"
 
 - name: Ensure restic rest-server config directory exists
+  when: restic_rest_server_enabled
   file:
     path: "/etc/restic_rest_server"
     state: directory
     owner: "{{ restic_rest_server_user }}"
     group: "{{ restic_rest_server_group }}"
+    recurse: true
 
 - name: Add users to .htpasswd
+  when: restic_rest_server_enabled
   community.general.htpasswd:
     path: /etc/restic_rest_server/.htpasswd
     name: "{{ item.name }}"

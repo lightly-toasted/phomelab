@@ -1,13 +1,18 @@
 ---
+- name: Set backups state fact
+  ansible.builtin.set_fact:
+    backups_state: "{{ 'present' if backups_enabled else 'absent' }}"
+
 - name: Ensure backup script directories exist
   ansible.builtin.file:
     path: "/opt/backups/{{ item.name }}"
-    state: directory
+    state: "{{ 'directory' if backups_enabled else 'absent' }}"
     mode: "0755"
   loop: "{{ backups }}"
   no_log: true
 
 - name: Deploy backup scripts
+  when: backups_enabled
   ansible.builtin.template:
     src: "backup.sh.j2"
     dest: "/opt/backups/{{ item.name }}/backup.sh"
@@ -27,6 +32,7 @@
     s6_service_create_user: false
     s6_service_env: "{{ backup.env }}"
     s6_service_env_no_log: true
+    s6_service_state: "{{ backups_state }}"
   loop: "{{ backups }}"
   loop_control:
     loop_var: backup

@@ -1,4 +1,5 @@
 ---
+paperless_enabled: false
 paperless_ngx_user: paperless
 paperless_ngx_user_groups: redis
 paperless_ngx_port: "3002"
@@ -8,6 +9,7 @@ paperless_ngx_secret_key: "__CHANGE_ME__"
 
 paperless_ngx_data_root: /var/lib/paperless
 paperless_ngx_dirs:
+  _root: "{{ paperless_ngx_data_root }}"
   media: "{{ paperless_ngx_data_root }}/media"
   trash: "{{ paperless_ngx_data_root }}/media/trash"
   data: "{{ paperless_ngx_data_root }}/data"

@@ -1,4 +1,5 @@
 ---
+restic_rest_server_enabled: false
 restic_rest_server_user: restic_rest_server
 restic_rest_server_group: "{{ restic_rest_server_user }}"
 restic_rest_server_data_dir: /var/lib/{{ restic_rest_server_user }}
