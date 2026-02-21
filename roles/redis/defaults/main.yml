@@ -1,5 +1,5 @@
 ---
-redis_enabled: true
+redis_enabled: false
 redis_user: redis
 redis_group: "{{ redis_user }}"
 redis_socket: /run/redis/redis.sock
