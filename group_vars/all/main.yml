@@ -1,4 +1,5 @@
 ---
+redis_enabled: true
 glances_enabled: true
 opengist_enabled: true
 paperless_enabled: true
