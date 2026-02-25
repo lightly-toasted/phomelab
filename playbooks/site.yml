@@ -18,6 +18,7 @@
     - { role: restic_rest_server, tags: [restic_rest_server, service] }
     - { role: backups, tags: [backups, service] }
     - { role: navidrome, tags: [navidrome, service] }
+    - { role: openwebui, tags: [openwebui, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

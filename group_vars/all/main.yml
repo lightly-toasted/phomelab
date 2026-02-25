@@ -8,6 +8,7 @@ backups_enabled: true
 navidrome_enabled: true
 caddy_enabled: true
 cloudflared_enabled: true
+openwebui_enabled: true
 
 
 caddy_caddyfile: |
@@ -44,4 +45,9 @@ caddy_caddyfile: |
   http://music.ts.700457.xyz {
     # Navidrome
     reverse_proxy http://localhost:{{ navidrome_port }}
+  }
+
+  http://chat.ts.700457.xyz {
+    # Open WebUI
+    reverse_proxy http://localhost:{{ openwebui_port }}
   }

@@ -1,0 +1,22 @@
+---
+- name: Set Open WebUI state fact
+  ansible.builtin.set_fact:
+    openwebui_state: "{{ 'present' if openwebui_enabled else 'absent' }}"
+
+- name: Build Open WebUI
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#open-webui
+    nix_build_out: /opt/openwebui
+    nix_build_allow_unfree: true
+    nix_build_state: "{{ openwebui_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: openwebui
+    s6_service_command: "exec /opt/openwebui/bin/open-webui serve --host {{ openwebui_host }} --port {{ openwebui_port }}"
+    s6_service_env: "{{ openwebui_env }}"
+    s6_service_state: "{{ openwebui_state }}"
