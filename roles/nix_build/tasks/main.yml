@@ -27,10 +27,15 @@
     - name: Build nix package if state is present
       ansible.builtin.command: >-
         {{ nix_bin }} build
+        {% if nix_build_allow_unfree %}
+        --impure
+        {% endif %}
         {% if nix_build_inputs_from is defined and nix_build_inputs_from | length > 0 %}
         --inputs-from {{ nix_build_inputs_from }}
         {% endif %}
         {{ nix_build_attr }} -o {{ nix_build_out }}
+      environment:
+        NIXPKGS_ALLOW_UNFREE: "{{ '1' if nix_build_allow_unfree else '0' }}"
       changed_when: false
 
     - name: Check current nix build output after build

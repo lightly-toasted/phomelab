@@ -2,6 +2,7 @@
 nix_build_inputs_from: "github:lightly-toasted/homelab-ansible/ea0cc0aad9fbc7f3c6aa6aed69846cbd8f0d85c6"
 
 nix_build_attr: ""
+nix_build_allow_unfree: false
 nix_build_out: ""
 nix_build_state: present
 
