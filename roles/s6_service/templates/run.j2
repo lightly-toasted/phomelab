@@ -13,4 +13,8 @@ s6-envdir {{ s6_service_envdir }}
 s6-setuidgid {{ s6_service_user_name }}
 
 {% endif %}
+{% if s6_service_workdir is defined and s6_service_workdir is string and s6_service_workdir | trim | length > 0 %}
+cd {{ s6_service_workdir }}
+
+{% endif %}
 {{ s6_service_command }}
