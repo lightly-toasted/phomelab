@@ -1,0 +1,10 @@
+---
+trilium_enabled: false
+trilium_data_dir: "/var/lib/trilium"
+
+trilium_host: "0.0.0.0"
+trilium_port: "3006"
+trilium_no_backup: false
+trilium_no_auth: false
+trilium_https: false
+trilium_cookie_max_age: "1814400"

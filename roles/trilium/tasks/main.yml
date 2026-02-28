@@ -1,0 +1,30 @@
+---
+- name: Set Trilium state fact
+  ansible.builtin.set_fact:
+    trilium_state: "{{ 'present' if trilium_enabled else 'absent' }}"
+
+- name: Build Trilium
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#trilium-server
+    nix_build_out: /opt/trilium
+    nix_build_state: "{{ trilium_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: trilium
+    s6_service_command: "exec /opt/trilium/bin/trilium-server"
+    s6_service_env:
+      TRILIUM_DATA_DIR: "{{ trilium_data_dir }}"
+    s6_service_state: "{{ trilium_state }}"
+
+- name: Create config.ini
+  when: trilium_enabled
+  ansible.builtin.template:
+    src: config.ini.j2
+    dest: "{{ trilium_data_dir }}/config.ini"
+    mode: "0644"
+

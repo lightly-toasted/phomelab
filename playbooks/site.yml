@@ -19,6 +19,7 @@
     - { role: backups, tags: [backups, service] }
     - { role: navidrome, tags: [navidrome, service] }
     - { role: openwebui, tags: [openwebui, service] }
+    - { role: trilium, tags: [trilium, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

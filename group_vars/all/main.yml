@@ -9,6 +9,7 @@ navidrome_enabled: true
 caddy_enabled: true
 cloudflared_enabled: true
 openwebui_enabled: true
+trilium_enabled: true
 
 
 caddy_caddyfile: |
@@ -50,4 +51,9 @@ caddy_caddyfile: |
   http://chat.ts.700457.xyz {
     # Open WebUI
     reverse_proxy http://localhost:{{ openwebui_port }}
+  }
+
+  http://notes.ts.700457.xyz {
+    # Trilium Notes
+    reverse_proxy http://localhost:{{ trilium_port }}
   }
