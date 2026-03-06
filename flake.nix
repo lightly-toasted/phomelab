@@ -14,6 +14,10 @@
       ];
       
       perSystem = { pkgs, system, ... }: {
+        packages = import ./pkgs {
+          inherit pkgs system;
+        };
+
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             ansible
