@@ -20,6 +20,7 @@
     - { role: navidrome, tags: [navidrome, service] }
     - { role: openwebui, tags: [openwebui, service] }
     - { role: trilium, tags: [trilium, service] }
+    - { role: memos, tags: [memos, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

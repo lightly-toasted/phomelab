@@ -10,6 +10,7 @@ caddy_enabled: true
 cloudflared_enabled: true
 openwebui_enabled: true
 trilium_enabled: true
+memos_enabled: true
 
 
 caddy_caddyfile: |
@@ -56,4 +57,9 @@ caddy_caddyfile: |
   http://notes.ts.700457.xyz {
     # Trilium Notes
     reverse_proxy http://localhost:{{ trilium_port }}
+  }
+
+  http://memos.ts.700457.xyz {
+    # Trilium Notes
+    reverse_proxy http://localhost:{{ memos_port }}
   }

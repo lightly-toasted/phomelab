@@ -1,0 +1,14 @@
+; vim: ft=dosini
+
+[General]
+noAuthentication={{ trilium_no_auth | string | lower }}
+noBackup={{ trilium_no_backup | string | lower }}
+
+[Network]
+host={{ trilium_host }}
+port={{ trilium_port }}
+https={{ trilium_https | string | lower }}
+
+[Session]
+cookieMaxAge={{ trilium_cookie_max_age }}
+
