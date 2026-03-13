@@ -1,4 +1,8 @@
 #!/bin/execlineb -P
+{% if s6_service_enable_logs %}
+fdmove -c 2 1
+
+{% endif %}
 {{ s6_service_pre_exec }}
 
 {% for dep in s6_service_dependencies %}
