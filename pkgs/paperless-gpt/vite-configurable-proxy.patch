@@ -1,0 +1,40 @@
+diff --git a/vite.config.ts b/vite.config.ts
+index 72581b5..c31b231 100644
+--- a/vite.config.ts
++++ b/vite.config.ts
+@@ -1,15 +1,25 @@
+ import react from '@vitejs/plugin-react-swc';
+-import { defineConfig } from 'vite';
++import { defineConfig, loadEnv } from 'vite';
+ 
+-export default defineConfig({
+-    plugins: [react()],
+-    server: {
+-        proxy: {
+-            '/api': {
+-                target: 'http://localhost:8080', // Ihr Go-Webservice
+-                changeOrigin: true,
+-                // rewrite: (path) => path.replace(/^\/api/, ''), // Entfernen Sie '/api' aus dem Pfad
++export default defineConfig(({ mode }) => {
++    const env = loadEnv(mode, process.cwd(), '');
++    
++    const target = env.LISTEN_INTERFACE || ':8080';
++    
++    const formattedTarget = target.startsWith(':') 
++        ? `http://localhost${target}` 
++        : target;
++
++    return {
++        plugins: [react()],
++        server: {
++            proxy: {
++                '/api': {
++                    target: formattedTarget,
++                    changeOrigin: true,
++                    // rewrite: (path) => path.replace(/^\/api/, ''),
++                },
+             },
+         },
+-    },
++    };
+ });
