@@ -1,0 +1,32 @@
+---
+- name: Set paperless-gpt state fact
+  ansible.builtin.set_fact:
+    paperless_gpt_state: "{{ 'present' if paperless_gpt_enabled else 'absent' }}"
+
+- name: Build paperless-gpt
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: github:lightly-toasted/homelab-ansible/c1644f0c7cd8ea06d44249da68b98dc752d8420b#paperless-gpt
+    nix_build_out: /opt/paperless-gpt
+    nix_build_state: "{{ paperless_gpt_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: paperless-gpt
+    s6_service_user_name: "{{ paperless_gpt_user }}"
+    s6_service_user_group: "{{ paperless_gpt_group }}"
+    s6_service_command: 'exec /opt/paperless-gpt/bin/paperless-gpt'
+    s6_service_env: "{{ paperless_gpt_env }}"
+    s6_service_state: "{{ paperless_gpt_state }}"
+    
+- name: Copy default_prompts folder
+  ansible.builtin.copy:
+    src: paperless-gpt/default_prompts
+    dest: /var/lib/paperless-gpt/
+    owner: "{{ paperless_gpt_user }}"
+    group: "{{ paperless_gpt_group }}"
+    mode: "0755"
+    
