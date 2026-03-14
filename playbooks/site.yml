@@ -21,6 +21,7 @@
     - { role: openwebui, tags: [openwebui, service] }
     - { role: trilium, tags: [trilium, service] }
     - { role: memos, tags: [memos, service] }
+    - { role: paperless_gpt, tags: [paperless_gpt, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

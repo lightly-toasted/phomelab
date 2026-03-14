@@ -1,0 +1,19 @@
+---
+paperless_gpt_enabled: true
+paperless_gpt_user: paperless-gpt
+paperless_gpt_group: paperless-gpt
+paperless_gpt_env:
+  LISTEN_INTERFACE: ":3008"
+  PAPERLESS_BASE_URL: "http://localhost:{{ paperless_ngx_port }}"
+  PAPERLESS_API_TOKEN: "your_paperless_api_token"
+
+  LLM_PROVIDER: "openai"
+  LLM_MODEL: "gpt-4o"
+  OPENAI_API_KEY: "your_openai_api_key"
+
+  OCR_PROVIDER: "llm"
+  VISION_LLM_PROVIDER: "openai"
+  VISION_LLM_MODEL: "gpt-4o"
+
+  OCR_PROCESS_MODE: "image"
+  PDF_SKIP_EXISTING_OCR: "false"
