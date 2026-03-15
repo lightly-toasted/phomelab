@@ -21,5 +21,4 @@ s6_service_env: {}
 s6_service_env_no_log: false
 s6_service_envdir: "{{ s6_service_dir }}/env"
 
-# Optional dependencies - list of full paths to service directories
-s6_service_dependencies: []
+s6_service_dependencies: [] # list of s6 service names
