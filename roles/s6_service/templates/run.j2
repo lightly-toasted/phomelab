@@ -6,7 +6,7 @@ fdmove -c 2 1
 {{ s6_service_pre_exec }}
 
 {% for dep in s6_service_dependencies %}
-foreground { s6-svwait -u {{ dep }} }
+foreground { s6-svwait -u {{ s6_service_services_dir }}/{{ dep }} }
 
 {% endfor %}
 {% if s6_service_env | length > 0 %}
