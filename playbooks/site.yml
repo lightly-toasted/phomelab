@@ -22,6 +22,7 @@
     - { role: trilium, tags: [trilium, service] }
     - { role: memos, tags: [memos, service] }
     - { role: paperless_gpt, tags: [paperless_gpt, service] }
+    - { role: tailscaled, tags: [tailscaled, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

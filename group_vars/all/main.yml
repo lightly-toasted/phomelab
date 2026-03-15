@@ -11,6 +11,7 @@ cloudflared_enabled: true
 openwebui_enabled: true
 trilium_enabled: true
 memos_enabled: true
+tailscaled_enabled: true
 
 
 caddy_caddyfile: |
