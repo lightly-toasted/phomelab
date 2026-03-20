@@ -1,5 +1,5 @@
 ---
-paperless_gpt_enabled: true
+paperless_gpt_enabled: false
 paperless_gpt_user: paperless-gpt
 paperless_gpt_group: paperless-gpt
 paperless_gpt_env:
