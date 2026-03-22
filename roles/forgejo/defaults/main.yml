@@ -1,0 +1,14 @@
+---
+forgejo_enabled: false
+forgejo_user: forgejo
+forgejo_group: forgejo
+
+forgejo_port: "3009"
+forgejo_data_dir: /var/lib/forgejo
+forgejo_config_dir: /etc/forgejo
+
+# https://forgejo.org/docs/latest/admin/config-cheat-sheet
+forgejo_config: |
+  APP_NAME = ; Forgejo: Beyond coding. We Forge.
+
+

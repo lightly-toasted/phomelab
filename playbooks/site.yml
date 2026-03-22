@@ -23,6 +23,7 @@
     - { role: memos, tags: [memos, service] }
     - { role: paperless_gpt, tags: [paperless_gpt, service] }
     - { role: tailscaled, tags: [tailscaled, service] }
+    - { role: forgejo, tags: [forgejo, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

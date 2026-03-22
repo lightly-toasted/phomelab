@@ -1,0 +1,44 @@
+---
+- name: Set Forgejo state fact
+  ansible.builtin.set_fact:
+    forgejo_state: "{{ 'present' if forgejo_enabled else 'absent' }}"
+
+- name: Build Forgejo
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#forgejo
+    nix_build_out: /opt/forgejo
+    nix_build_state: "{{ forgejo_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: forgejo
+    s6_service_command: 'exec /opt/forgejo/bin/forgejo web --port {{ forgejo_port }} --work-path {{ forgejo_data_dir }} --config {{ forgejo_config_dir }}/app.ini'
+    s6_service_user_name: "{{ forgejo_user }}"
+    s6_service_user_group: "{{ forgejo_group }}"
+    s6_service_user_home: "{{ forgejo_data_dir }}"
+    s6_service_state: "{{ forgejo_state }}"
+
+- name: Ensure Forgejo directories exist
+  when: forgejo_enabled
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ forgejo_user }}"
+    group: "{{ forgejo_group }}"
+    recurse: true
+  loop:
+    - "{{ forgejo_data_dir }}"
+    - "{{ forgejo_config_dir }}"
+    
+- name: Create app.ini
+  when: forgejo_enabled
+  copy:
+    dest: "{{ forgejo_config_dir }}/app.ini"
+    content: "{{ forgejo_config }}"
+    owner: "{{ forgejo_user }}"
+    group: "{{ forgejo_group }}"
+    mode: "0644"
