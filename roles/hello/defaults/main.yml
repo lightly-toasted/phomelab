@@ -1,0 +1,5 @@
+---
+hello_enabled: false
+hello_user: hello
+hello_group: hello
+

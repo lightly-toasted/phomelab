@@ -1,0 +1,23 @@
+---
+- name: Set Hello World state fact
+  ansible.builtin.set_fact:
+    hello_state: "{{ 'present' if hello_enabled else 'absent' }}"
+
+- name: Build Hello World
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: nixpkgs#hello
+    nix_build_out: /opt/hello
+    nix_build_state: "{{ hello_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: hello
+    s6_service_command: 'exec /opt/hello/bin/hello'
+    s6_service_user_name: "{{ hello_user }}"
+    s6_service_user_group: "{{ hello_group }}"
+    s6_service_state: "{{ hello_state }}"
+
