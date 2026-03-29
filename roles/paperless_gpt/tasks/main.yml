@@ -7,7 +7,7 @@
   include_role:
     name: nix_build
   vars:
-    nix_build_attr: github:lightly-toasted/homelab-ansible/c1644f0c7cd8ea06d44249da68b98dc752d8420b#paperless-gpt
+    nix_build_attr: github:lightly-toasted/phomelab/c1644f0c7cd8ea06d44249da68b98dc752d8420b#paperless-gpt
     nix_build_out: /opt/paperless-gpt
     nix_build_state: "{{ paperless_gpt_state }}"
 

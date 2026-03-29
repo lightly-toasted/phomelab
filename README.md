@@ -1,2 +1,2 @@
-# homelab-ansible
-Declarative configuration for my homelab using Ansible.
+# phomelab
+Run your homelab on phones

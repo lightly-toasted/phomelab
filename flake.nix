@@ -1,5 +1,5 @@
 {
-  description = "Declarative configuration for my homelab using Ansible";
+  description = "Run your homelab on phones";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
