@@ -2,7 +2,12 @@
 cloudflared_enabled: false
 cloudflared_user: cloudflared
 cloudflared_group: cloudflared
-cloudflared_tunnel: 80415f05-21c3-4e0e-9b59-2e155b5f3cb3
-cloudflared_domain: "700457.xyz"
-cloudflared_subdomains:
-  - gist
+cloudflared_tunnel: "00000000-0000-0000-0000-000000000000"
+cloudflared_credentials: '{"AccountTag":"","TunnelSecret":"","TunnelID":"","Endpoint":""}' # contents of credentials file
+cloudflared_config: # without tunnel and credentials-file
+  ingress:
+    - hostname: example.com
+      service: localhost:8000
+    - hostname: example2.com
+      service: localhost:8001
+

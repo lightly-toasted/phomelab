@@ -29,22 +29,20 @@
     group: "{{ cloudflared_group }}"
     recurse: true
   loop:
+    - "/var/lib/cloudflared"
     - "/etc/cloudflared"
 
-- name: Copy cloudflared files
+- name: Copy cloudflared credentials file
   when: cloudflared_enabled
   copy:
-    src: "{{ item }}"
-    dest: /etc/cloudflared/
+    dest: "/etc/cloudflared/{{ cloudflared_tunnel }}.json"
+    content: "{{ cloudflared_credentials }}"
     mode: "0644"
-  loop:
-    - "{{ cloudflared_tunnel }}.json"
-    - cert.pem
 
 - name: Create config.yml
   when: cloudflared_enabled
-  template:
-    src: config.yml
-    dest: /etc/cloudflared
+  copy:
+    dest: /etc/cloudflared/config.yml
+    content: "{{ cloudflared_tunnel_config | combine(cloudflared_config, recursive=true) | to_nice_yaml }}"
     mode: "0644"
   
