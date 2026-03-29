@@ -1,5 +1,5 @@
 ---
-paperless_enabled: false
+paperless_ngx_enabled: false
 paperless_ngx_user: paperless
 paperless_ngx_user_groups: redis
 paperless_ngx_port: "3002"
