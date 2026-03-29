@@ -21,6 +21,7 @@
     s6_service_user_group: "{{ forgejo_group }}"
     s6_service_user_home: "{{ forgejo_data_dir }}"
     s6_service_state: "{{ forgejo_state }}"
+    s6_service_user_shell: /usr/bin/bash
 
 - name: Ensure Forgejo directories exist
   when: forgejo_enabled
