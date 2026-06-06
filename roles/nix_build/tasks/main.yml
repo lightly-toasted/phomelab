@@ -24,6 +24,13 @@
       ansible.builtin.set_fact:
         old_link_target: "{{ nix_build_out_stat.stat.lnk_source | default('') }}"
 
+    - name: Set default nix_build_inputs_from
+      ansible.builtin.set_fact:
+        nix_build_inputs_from: "{{ nix_build_inputs_from_default }}"
+      when:
+        - (nix_build_inputs_from | default("")) == ""
+        - nix_build_attr.startswith("nixpkgs#")
+
     - name: Build nix package if state is present
       ansible.builtin.command: >-
         {{ nix_bin }} build
