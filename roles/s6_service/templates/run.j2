@@ -15,6 +15,7 @@ s6-envdir {{ s6_service_envdir }}
 {% endif %}
 {% if s6_service_create_user %}
 s6-setuidgid {{ s6_service_user_name }}
+export HOME {{ s6_service_user_home }}
 
 {% endif %}
 {% if s6_service_workdir is defined and s6_service_workdir is string and s6_service_workdir | trim | length > 0 %}
