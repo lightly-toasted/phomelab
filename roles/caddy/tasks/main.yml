@@ -3,19 +3,23 @@
   ansible.builtin.set_fact:
     caddy_state: "{{ 'present' if caddy_enabled else 'absent' }}"
 
-- name: Install caddy package
-  ansible.builtin.apt:
-    name: caddy
-    state: "{{ caddy_state }}"
+- name: Build caddy
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ caddy_package }}"
+    nix_build_out: "{{ caddy_package_path }}"
+    nix_build_state: "{{ caddy_state }}"
 
 - name: Create s6 service
   include_role:
     name: s6_service
   vars:
     s6_service_name: caddy
-    s6_service_command: caddy run --config /etc/caddy/Caddyfile --adapter caddyfile
+    s6_service_command: "{{ caddy_package_path }}/bin/caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"
     s6_service_user_name: "{{ caddy_user }}"
     s6_service_state: "{{ caddy_state }}"
+    s6_service_env: "{{ caddy_env }}"
 
 - name: Create caddy directories
   when: caddy_enabled
