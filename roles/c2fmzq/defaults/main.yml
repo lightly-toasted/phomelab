@@ -1,0 +1,13 @@
+---
+c2fmzq_enabled: false
+c2fmzq_package: nixpkgs#c2fmzq
+c2fmzq_package_path: /opt/c2fmzq
+c2fmzq_user: c2fmzq
+c2fmzq_group: c2fmzq
+
+c2fmzq_data_dir: "/var/lib/{{ c2fmzq_user }}/data"
+c2fmzq_address: "127.0.0.1:3011"
+c2fmzq_env: # https://github.com/c2FmZQ/photos#build-and-run-it-locally
+  C2FMZQ_PASSPHRASE: supersecret
+
+  

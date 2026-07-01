@@ -24,7 +24,8 @@
     - { role: paperless_gpt, tags: [paperless_gpt, service] }
     - { role: tailscaled, tags: [tailscaled, service] }
     - { role: forgejo, tags: [forgejo, service] }
-    - { role: rustypaste, tags: [rustypaste, service]}
+    - { role: rustypaste, tags: [rustypaste, service] }
+    - { role: c2fmzq, tags: [c2fmzq, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }
