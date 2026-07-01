@@ -1,0 +1,25 @@
+---
+- name: Set c2fmzq state fact
+  ansible.builtin.set_fact:
+    c2fmzq_state: "{{ 'present' if c2fmzq_enabled else 'absent' }}"
+
+- name: Build c2fmzq
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ c2fmzq_package }}"
+    nix_build_out: "{{ c2fmzq_package_path }}"
+    nix_build_state: "{{ c2fmzq_state }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: c2fmzq
+    s6_service_command: 'exec {{ c2fmzq_package_path }}/bin/c2FmZQ-server --db {{ c2fmzq_data_dir }} --addr {{ c2fmzq_address }}'
+    s6_service_user_name: "{{ c2fmzq_user }}"
+    s6_service_user_group: "{{ c2fmzq_group }}"
+    s6_service_state: "{{ c2fmzq_state }}"
+    s6_service_env: "{{ c2fmzq_env }}"
+    s6_service_env_no_log: true
+
