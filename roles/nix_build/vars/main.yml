@@ -1,2 +1,2 @@
 ---
-nix_build_inputs_from_default: "github:lightly-toasted/phomelab/ea0cc0aad9fbc7f3c6aa6aed69846cbd8f0d85c6"
+nix_build_inputs_from_default: "github:lightly-toasted/phomelab/4ea87f59a159224a9e1b1961c16153926c98142f"

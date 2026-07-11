@@ -10,6 +10,9 @@
     nix_build_attr: nixpkgs#paperless-ngx
     nix_build_out: "{{ paperless_ngx_package_path }}"
     nix_build_state: "{{ paperless_ngx_state }}"
+    # NOTE: pinned to this commit because newer nixpkgs revisions fail to build
+    # paperless-ngx on some aarch64 devices (exact cause unknown)
+    nix_build_inputs_from: "github:lightly-toasted/phomelab/ea0cc0aad9fbc7f3c6aa6aed69846cbd8f0d85c6"
     
 - name: Create s6 services
   include_role:
