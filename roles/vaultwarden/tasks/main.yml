@@ -1,0 +1,41 @@
+---
+- name: Set Vaultwarden state fact
+  ansible.builtin.set_fact:
+    vaultwarden_state: "{{ 'present' if vaultwarden_enabled else 'absent' }}"
+
+- name: Build Vaultwarden
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ vaultwarden_package }}"
+    nix_build_out: "{{ vaultwarden_package_path }}"
+    nix_build_state: "{{ vaultwarden_state }}"
+
+- name: Build Vaultwarden Web Vault
+  include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ vaultwarden_web_vault_package }}"
+    nix_build_out: "{{ vaultwarden_web_vault_package_path }}"
+    nix_build_state: "{{ 'present' if vaultwarden_enabled and vaultwarden_web_vault_enabled else 'absent' }}"
+
+- name: Set Vaultwarden environment defaults
+  when: vaultwarden_enabled
+  ansible.builtin.set_fact:
+    vaultwarden_env_default:
+      WEB_VAULT_ENABLED: "{{ vaultwarden_web_vault_enabled | bool | string | lower }}"
+      WEB_VAULT_FOLDER: "{{ (vaultwarden_web_vault_package_path + '/share/vaultwarden/vault') if vaultwarden_web_vault_enabled else omit }}"
+      ROCKET_PORT: "{{ vaultwarden_port }}"
+
+- name: Create s6 service
+  include_role:
+    name: s6_service
+  vars:
+    s6_service_name: vaultwarden
+    s6_service_command: 'exec {{ vaultwarden_package_path }}/bin/vaultwarden'
+    s6_service_user_name: "{{ vaultwarden_user }}"
+    s6_service_user_group: "{{ vaultwarden_group }}"
+    s6_service_state: "{{ vaultwarden_state }}"
+    s6_service_env: "{{ vaultwarden_env_default | combine(vaultwarden_env, recursive=true) }}"
+
+

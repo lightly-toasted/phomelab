@@ -1,0 +1,13 @@
+---
+vaultwarden_enabled: false
+vaultwarden_package: nixpkgs#vaultwarden
+vaultwarden_package_path: /opt/vaultwarden
+vaultwarden_user: vaultwarden
+vaultwarden_group: vaultwarden
+vaultwarden_env:
+  DOMAIN: "https://example.com"
+vaultwarden_port: "3012"
+
+vaultwarden_web_vault_enabled: true
+vaultwarden_web_vault_package: nixpkgs#vaultwarden.webvault
+vaultwarden_web_vault_package_path: /opt/vaultwarden_web_vault
