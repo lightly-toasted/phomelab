@@ -4,7 +4,7 @@
     opengist_state: "{{ 'present' if opengist_enabled else 'absent' }}"
 
 - name: Ensure s6 service is {{ opengist_state }}
-  include_role:
+  ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: opengist
@@ -16,7 +16,7 @@
 
 - name: Ensure Opengist directories exist
   when: opengist_enabled
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ opengist_user }}"
@@ -29,14 +29,15 @@
 
 - name: Fetch Opengist tarball
   when: opengist_enabled
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ opengist_url }}"
     dest: "{{ opengist_tarball }}"
     checksum: "sha256:{{ opengist_sha256 }}"
+    mode: "0644"
 
 - name: Extract tarball
   when: opengist_enabled
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ opengist_tarball }}"
     dest: "/opt/opengist"
     remote_src: true
@@ -46,8 +47,7 @@
 
 - name: Create config.yml
   when: opengist_enabled
-  template:
+  ansible.builtin.template:
     src: config.yml.j2
     dest: /etc/opengist/config.yml
     mode: "0644"
-

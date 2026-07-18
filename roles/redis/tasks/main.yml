@@ -4,7 +4,7 @@
     redis_state: "{{ 'present' if redis_enabled else 'absent' }}"
 
 - name: Build Redis
-  include_role:
+  ansible.builtin.include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#redis
@@ -12,7 +12,7 @@
     nix_build_state: "{{ redis_state }}"
 
 - name: Create s6 service
-  include_role:
+  ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: redis
@@ -44,4 +44,3 @@
     src: redis.conf
     dest: /etc/redis/
     mode: "0644"
-

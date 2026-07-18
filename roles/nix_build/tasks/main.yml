@@ -13,6 +13,7 @@
   when: nix_build_state == "absent"
 
 - name: Ensure nix package is built if present
+  when: nix_build_state == "present"
   block:
     - name: Check current nix build output before build
       ansible.builtin.stat:
@@ -22,7 +23,7 @@
 
     - name: Store current link target
       ansible.builtin.set_fact:
-        old_link_target: "{{ nix_build_out_stat.stat.lnk_source | default('') }}"
+        nix_build_old_link_target: "{{ nix_build_out_stat.stat.lnk_source | default('') }}"
 
     - name: Set default nix_build_inputs_from
       ansible.builtin.set_fact:
@@ -33,7 +34,7 @@
 
     - name: Build nix package if state is present
       ansible.builtin.command: >-
-        {{ nix_bin }} build
+        {{ nix_build_bin }} build
         {% if nix_build_allow_unfree %}
         --impure
         {% endif %}
@@ -51,5 +52,4 @@
         follow: false
       register: nix_build_out_stat_after
       changed_when: >
-        old_link_target != nix_build_out_stat_after.stat.lnk_source
-  when: nix_build_state == "present"
+        nix_build_old_link_target != nix_build_out_stat_after.stat.lnk_source

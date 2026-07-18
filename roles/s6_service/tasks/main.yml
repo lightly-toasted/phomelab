@@ -118,4 +118,3 @@
           loop: "{{ s6_service_env | dict2items }}"
           no_log: "{{ s6_service_env_no_log }}"
           notify: Reload s6 services
-

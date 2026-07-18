@@ -4,4 +4,3 @@ hello_package: nixpkgs#hello
 hello_package_path: /opt/hello
 hello_user: hello
 hello_group: hello
-

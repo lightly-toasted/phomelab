@@ -1,6 +1,8 @@
 ---
-- name: Install Determinate Nix
-  shell: curl -fsSL https://install.determinate.systems/nix | sh -s -- Install
+- name: Install Determinate Nix # noqa command-instead-of-module
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    curl -fsSL https://install.determinate.systems/nix | sh -s -- Install
   args:
     executable: /bin/bash
     creates: /nix

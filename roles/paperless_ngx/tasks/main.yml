@@ -4,7 +4,7 @@
     paperless_ngx_state: "{{ 'present' if paperless_ngx_enabled else 'absent' }}"
 
 - name: Build Paperless-ngx
-  include_role:
+  ansible.builtin.include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#paperless-ngx
@@ -13,9 +13,9 @@
     # NOTE: pinned to this commit because newer nixpkgs revisions fail to build
     # paperless-ngx on some aarch64 devices (exact cause unknown)
     nix_build_inputs_from: "github:lightly-toasted/phomelab/ea0cc0aad9fbc7f3c6aa6aed69846cbd8f0d85c6"
-    
+
 - name: Create s6 services
-  include_role:
+  ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: "{{ service.name }}"
@@ -24,14 +24,14 @@
     s6_service_user_name: "{{ paperless_ngx_user }}"
     s6_service_user_groups: "{{ paperless_ngx_user_groups }}"
     s6_service_env: { PAPERLESS_CONFIG_PATH: /etc/paperless.conf }
-    s6_service_dependencies: [ redis ]
+    s6_service_dependencies: [redis]
   loop: "{{ paperless_ngx_services }}"
   loop_control:
     loop_var: service
 
 - name: Ensure Paperless-ngx directories exist
   when: paperless_ngx_enabled
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ paperless_ngx_user }}"
@@ -41,8 +41,7 @@
 
 - name: Create paperless.conf
   when: paperless_ngx_enabled
-  template:
+  ansible.builtin.template:
     src: paperless.conf
     dest: /etc/paperless.conf
     mode: "0644"
-
