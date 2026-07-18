@@ -9,5 +9,3 @@ c2fmzq_data_dir: "/var/lib/{{ c2fmzq_user }}/data"
 c2fmzq_address: "127.0.0.1:3011"
 c2fmzq_env: # https://github.com/c2FmZQ/photos#build-and-run-it-locally
   C2FMZQ_PASSPHRASE: supersecret
-
-  

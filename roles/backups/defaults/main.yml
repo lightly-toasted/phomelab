@@ -1,6 +1,6 @@
 ---
 backups_enabled: false
-backups:
+backups_list:
   - name: example_backup
     paths:
       - "/home/toast"
@@ -13,9 +13,8 @@ backups:
       - "--keep-weekly 5"
       - "--keep-monthly 12"
       - "--keep-yearly 3"
-    snooze_args: "-H'*'" # scheduling 
+    snooze_args: "-H'*'" # scheduling
     env:
       RESTIC_PASSWORD: supersecret
       RESTIC_REST_USERNAME: changeme
       RESTIC_REST_PASSWORD: changeme
-

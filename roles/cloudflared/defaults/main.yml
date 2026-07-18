@@ -10,4 +10,3 @@ cloudflared_config: # without tunnel and credentials-file
       service: localhost:8000
     - hostname: example2.com
       service: localhost:8001
-

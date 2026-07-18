@@ -2,4 +2,3 @@
 cloudflared_tunnel_config:
   tunnel: "{{ cloudflared_tunnel }}"
   credentials-file: "/etc/cloudflared/{{ cloudflared_tunnel }}.json"
-  

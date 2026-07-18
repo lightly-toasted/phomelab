@@ -10,5 +10,3 @@ forgejo_config_dir: /etc/forgejo
 # https://forgejo.org/docs/latest/admin/config-cheat-sheet
 forgejo_config: |
   APP_NAME = ; Forgejo: Beyond coding. We Forge.
-
-

@@ -18,4 +18,3 @@ openwebui_env:
   ENABLE_REALTIME_CHAT_SAVE: "False"
   AUDIO_STT_ENGINE: "webapi"
   ENABLE_AUTOCOMPLETE_GENERATION: "False"
-

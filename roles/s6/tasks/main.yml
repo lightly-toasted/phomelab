@@ -1,3 +1,4 @@
+---
 - name: Install s6
   ansible.builtin.apt:
     name:

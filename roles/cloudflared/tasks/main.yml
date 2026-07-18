@@ -4,7 +4,7 @@
     cloudflared_state: "{{ 'present' if cloudflared_enabled else 'absent' }}"
 
 - name: Build cloudflared
-  include_role:
+  ansible.builtin.include_role:
     name: nix_build
   vars:
     nix_build_attr: nixpkgs#cloudflared
@@ -12,7 +12,7 @@
     nix_build_state: "{{ cloudflared_state }}"
 
 - name: Create s6 service
-  include_role:
+  ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: cloudflared
@@ -22,7 +22,7 @@
 
 - name: Ensure cloudflared directories exist
   when: cloudflared_enabled
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: "{{ cloudflared_user }}"
@@ -34,15 +34,14 @@
 
 - name: Copy cloudflared credentials file
   when: cloudflared_enabled
-  copy:
+  ansible.builtin.copy:
     dest: "/etc/cloudflared/{{ cloudflared_tunnel }}.json"
     content: "{{ cloudflared_credentials }}"
     mode: "0644"
 
 - name: Create config.yml
   when: cloudflared_enabled
-  copy:
+  ansible.builtin.copy:
     dest: /etc/cloudflared/config.yml
     content: "{{ cloudflared_tunnel_config | combine(cloudflared_config, recursive=true) | to_nice_yaml }}"
     mode: "0644"
-  

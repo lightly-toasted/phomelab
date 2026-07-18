@@ -6,4 +6,4 @@ nix_build_allow_unfree: false
 nix_build_out: ""
 nix_build_state: present
 
-nix_bin: /nix/var/nix/profiles/default/bin/nix
+nix_build_bin: /nix/var/nix/profiles/default/bin/nix

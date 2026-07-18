@@ -4,7 +4,7 @@
     rustypaste_state: "{{ 'present' if rustypaste_enabled else 'absent' }}"
 
 - name: Build rustypaste
-  include_role:
+  ansible.builtin.include_role:
     name: nix_build
   vars:
     nix_build_attr: "{{ rustypaste_package }}"
@@ -12,11 +12,11 @@
     nix_build_state: "{{ rustypaste_state }}"
 
 - name: Create s6 service
-  include_role:
+  ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: rustypaste
-    s6_service_command: 'exec {{ rustypaste_package_path }}/bin/rustypaste'
+    s6_service_command: "exec {{ rustypaste_package_path }}/bin/rustypaste"
     s6_service_user_name: "{{ rustypaste_user }}"
     s6_service_user_group: "{{ rustypaste_group }}"
     s6_service_state: "{{ rustypaste_state }}"
@@ -25,7 +25,7 @@
 
 - name: Ensure rustypaste config directory exists
   when: rustypaste_enabled
-  file:
+  ansible.builtin.file:
     path: "{{ rustypaste_config_path | dirname }}"
     state: directory
     owner: "{{ rustypaste_user }}"
@@ -34,7 +34,7 @@
 
 - name: Create config.toml
   when: rustypaste_enabled
-  copy:
+  ansible.builtin.copy:
     dest: "{{ rustypaste_config_path }}"
     content: "{{ rustypaste_config }}"
     owner: "{{ rustypaste_user }}"
