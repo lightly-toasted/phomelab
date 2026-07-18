@@ -1,0 +1,33 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Hello World
+    description:
+      - Template role for new services.
+        Builds from nixpkgs and creates an s6 service.
+    options:
+      hello_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the hello service
+      hello_package:
+        type: str
+        required: false
+        default: nixpkgs#hello
+        description: Nix package attribute for hello
+      hello_package_path:
+        type: path
+        required: false
+        default: /opt/hello
+        description: Nix build output path for hello
+      hello_user:
+        type: str
+        required: false
+        default: hello
+        description: System user for the hello service
+      hello_group:
+        type: str
+        required: false
+        default: hello
+        description: System group for the hello service

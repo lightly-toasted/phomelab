@@ -1,0 +1,60 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Vaultwarden
+    description:
+      - Builds Vaultwarden and optionally the web vault from
+        configurable nix package attributes. Creates an s6 service
+        with merged default and user-provided environment variables.
+    options:
+      vaultwarden_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Vaultwarden service
+      vaultwarden_package:
+        type: str
+        required: false
+        default: nixpkgs#vaultwarden
+        description: Nix package attribute for Vaultwarden
+      vaultwarden_package_path:
+        type: path
+        required: false
+        default: /opt/vaultwarden
+        description: Nix build output path for Vaultwarden
+      vaultwarden_user:
+        type: str
+        required: false
+        default: vaultwarden
+        description: System user for the Vaultwarden service
+      vaultwarden_group:
+        type: str
+        required: false
+        default: vaultwarden
+        description: System group for the Vaultwarden service
+      vaultwarden_env:
+        type: dict
+        required: false
+        description: User-provided environment variables (merged with computed defaults). See
+          [`defaults/main.yml#L7-L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/vaultwarden/defaults/main.yml#L7-L8) and
+          [Vaultwarden .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template) for an example.
+      vaultwarden_port:
+        type: str
+        required: false
+        default: "3012"
+        description: TCP port for the Vaultwarden web interface
+      vaultwarden_web_vault_enabled:
+        type: bool
+        required: false
+        default: true
+        description: Enable the Vaultwarden web vault
+      vaultwarden_web_vault_package:
+        type: str
+        required: false
+        default: nixpkgs#vaultwarden.webvault
+        description: Nix package attribute for the Vaultwarden web vault
+      vaultwarden_web_vault_package_path:
+        type: path
+        required: false
+        default: /opt/vaultwarden_web_vault
+        description: Nix build output path for the Vaultwarden web vault

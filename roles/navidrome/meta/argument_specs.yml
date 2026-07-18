@@ -1,0 +1,45 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Navidrome
+    description:
+      - Builds Navidrome from nixpkgs and creates an s6 service
+        with music streaming configuration.
+    options:
+      navidrome_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Navidrome service
+      navidrome_user:
+        type: str
+        required: false
+        default: navidrome
+        description: System user for the Navidrome service
+      navidrome_group:
+        type: str
+        required: false
+        default: navidrome
+        description: System group for the Navidrome service
+      navidrome_port:
+        type: str
+        required: false
+        default: "3004"
+        description: TCP port for the Navidrome web interface
+      navidrome_dir:
+        type: path
+        required: false
+        default: /var/lib/navidrome
+        description: Root directory for Navidrome data
+      navidrome_music_dir:
+        type: path
+        required: false
+        description: Music library directory
+      navidrome_data_dir:
+        type: path
+        required: false
+        description: Navidrome application data directory
+      navidrome_cache_dir:
+        type: path
+        required: false
+        description: Navidrome cache directory

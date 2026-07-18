@@ -1,0 +1,48 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Trilium
+    description:
+      - Builds Trilium server from nixpkgs and creates an s6 service
+        with config.ini for application settings.
+    options:
+      trilium_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Trilium service
+      trilium_data_dir:
+        type: path
+        required: false
+        default: /var/lib/trilium
+        description: Data directory for Trilium
+      trilium_host:
+        type: str
+        required: false
+        default: "0.0.0.0"
+        description: Bind address for the Trilium server
+      trilium_port:
+        type: str
+        required: false
+        default: "3006"
+        description: TCP port for the Trilium server
+      trilium_no_backup:
+        type: bool
+        required: false
+        default: false
+        description: Disable automatic backups in Trilium
+      trilium_no_auth:
+        type: bool
+        required: false
+        default: false
+        description: Disable authentication in Trilium
+      trilium_https:
+        type: bool
+        required: false
+        default: false
+        description: Enable HTTPS in Trilium
+      trilium_cookie_max_age:
+        type: str
+        required: false
+        default: "1814400"
+        description: Maximum cookie age in seconds for Trilium

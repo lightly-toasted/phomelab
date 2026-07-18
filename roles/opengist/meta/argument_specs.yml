@@ -1,0 +1,50 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Opengist
+    description:
+      - Downloads a pre-built Opengist tarball from GitHub releases
+        and creates an s6 service.
+    options:
+      opengist_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Opengist service
+      opengist_version:
+        type: str
+        required: false
+        default: "1.11.1"
+        description: Version of Opengist to download
+      opengist_arch:
+        type: str
+        required: false
+        default: arm64
+        description: Target architecture for the Opengist binary
+      opengist_url:
+        type: str
+        required: false
+        description: Full download URL for the Opengist tarball (derived from version and arch)
+      opengist_sha256:
+        type: str
+        required: false
+        description: SHA-256 checksum of the Opengist tarball
+      opengist_tarball:
+        type: path
+        required: false
+        description: Local cache path for the downloaded tarball
+      opengist_user:
+        type: str
+        required: false
+        default: gist
+        description: System user for the Opengist service
+      opengist_group:
+        type: str
+        required: false
+        default: opengist
+        description: System group for the Opengist service
+      opengist_port:
+        type: str
+        required: false
+        default: "3001"
+        description: TCP port for the Opengist web interface

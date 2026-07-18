@@ -1,0 +1,38 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Cloudflare Tunnel
+    description:
+      - Builds cloudflared from nixpkgs and creates an s6 service
+        with credentials file and tunnel configuration.
+    options:
+      cloudflared_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the cloudflared tunnel service
+      cloudflared_user:
+        type: str
+        required: false
+        default: cloudflared
+        description: System user for the cloudflared service
+      cloudflared_group:
+        type: str
+        required: false
+        default: cloudflared
+        description: System group for the cloudflared service
+      cloudflared_tunnel:
+        type: str
+        required: false
+        default: "00000000-0000-0000-0000-000000000000"
+        description: Tunnel ID for Cloudflare Tunnel
+      cloudflared_credentials:
+        type: str
+        required: false
+        default: '{"AccountTag":"","TunnelSecret":"","TunnelID":"","Endpoint":""}'
+        description: JSON content of the Cloudflare Tunnel credentials file
+      cloudflared_config:
+        type: dict
+        required: false
+        description: Ingress rules and other tunnel configuration (merged with base tunnel config). See
+          [`defaults/main.yml#L7-L12`](https://github.com/lightly-toasted/phomelab/blob/main/roles/cloudflared/defaults/main.yml#L7-L12) for an example.
