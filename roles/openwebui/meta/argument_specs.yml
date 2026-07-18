@@ -1,0 +1,30 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Open WebUI
+    description:
+      - Installs Open WebUI via pip into a virtualenv and creates
+        an s6 service with environment variable configuration.
+    options:
+      openwebui_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Open WebUI service
+      openwebui_host:
+        type: str
+        required: false
+        default: "0.0.0.0"
+        description: Bind address for the Open WebUI server
+      openwebui_port:
+        type: str
+        required: false
+        default: "3005"
+        description: TCP port for the Open WebUI server
+      openwebui_env:
+        type: dict
+        required: false
+        description: >-
+          Environment variables for Open WebUI configuration. See
+          [`defaults/main.yml#L5-L20`](https://github.com/lightly-toasted/phomelab/blob/main/roles/openwebui/defaults/main.yml#L5-L20)
+          for an example.

@@ -1,0 +1,13 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy tailscaled
+    description:
+      - Creates an s6 service for tailscaled using the tailscale
+        binary built by the tailscale role.
+    options:
+      tailscaled_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the tailscaled service

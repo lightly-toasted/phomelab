@@ -7,3 +7,8 @@
 .direnv/
 result
 result-*
+
+# Zensical
+.cache/
+docs/roles/*.md
+site/

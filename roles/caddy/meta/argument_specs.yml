@@ -1,0 +1,48 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Caddy
+    description:
+      - Builds Caddy from a configurable nix package attribute
+        and creates an s6 service with a Caddyfile template.
+    options:
+      caddy_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Caddy service
+      caddy_package:
+        type: str
+        required: false
+        default: nixpkgs#caddy
+        description: Nix package attribute for Caddy
+      caddy_package_path:
+        type: path
+        required: false
+        default: /opt/caddy
+        description: Nix build output path for Caddy
+      caddy_user:
+        type: str
+        required: false
+        default: caddy
+        description: System user for the Caddy service
+      caddy_group:
+        type: str
+        required: false
+        default: caddy
+        description: System group for the Caddy service
+      caddy_http_port:
+        type: str
+        required: false
+        default: "8080"
+        description: HTTP port for Caddy
+      caddy_https_port:
+        type: str
+        required: false
+        default: "8443"
+        description: HTTPS port for Caddy
+      caddy_env:
+        type: dict
+        required: false
+        default: {}
+        description: Environment variables for the Caddy service

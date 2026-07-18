@@ -1,0 +1,23 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Memos
+    description:
+      - Builds Memos from nixpkgs and creates an s6 service
+        with data directory and port configuration via environment variables.
+    options:
+      memos_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Memos service
+      memos_data_dir:
+        type: path
+        required: false
+        default: /var/lib/memos
+        description: Data directory for Memos
+      memos_port:
+        type: str
+        required: false
+        default: "3007"
+        description: TCP port for the Memos web interface

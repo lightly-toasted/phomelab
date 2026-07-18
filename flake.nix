@@ -23,6 +23,7 @@
             ansible
             ansible-lint
             just
+            zensical
           ];
 
           shellHook = ''

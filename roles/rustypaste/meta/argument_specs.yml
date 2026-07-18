@@ -1,0 +1,44 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy rustypaste
+    description:
+      - Builds rustypaste from a configurable nix package attribute
+        and creates an s6 service with a raw TOML configuration file.
+    options:
+      rustypaste_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the rustypaste service
+      rustypaste_package:
+        type: str
+        required: false
+        default: nixpkgs#rustypaste
+        description: Nix package attribute for rustypaste
+      rustypaste_package_path:
+        type: path
+        required: false
+        default: /opt/rustypaste
+        description: Nix build output path for rustypaste
+      rustypaste_user:
+        type: str
+        required: false
+        default: rustypaste
+        description: System user for the rustypaste service
+      rustypaste_group:
+        type: str
+        required: false
+        default: rustypaste
+        description: System group for the rustypaste service
+      rustypaste_config:
+        type: str
+        required: false
+        description: Raw TOML configuration content for rustypaste. See
+          [`defaults/main.yml#L8-L89`](https://github.com/lightly-toasted/phomelab/blob/main/roles/rustypaste/defaults/main.yml#L8-L89) and
+          [rustypaste config.toml](https://github.com/orhun/rustypaste/blob/master/config.toml) for an example.
+      rustypaste_config_path:
+        type: path
+        required: false
+        default: /etc/rustypaste/config.toml
+        description: Path to the rustypaste configuration file

@@ -1,0 +1,12 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Glances
+    description:
+      - Builds Glances from nixpkgs and creates an s6 service.
+    options:
+      glances_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Glances service

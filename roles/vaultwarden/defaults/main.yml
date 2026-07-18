@@ -4,7 +4,7 @@ vaultwarden_package: nixpkgs#vaultwarden
 vaultwarden_package_path: /opt/vaultwarden
 vaultwarden_user: vaultwarden
 vaultwarden_group: vaultwarden
-vaultwarden_env:
+vaultwarden_env: # https://github.com/dani-garcia/vaultwarden/blob/main/.env.template
   DOMAIN: "https://example.com"
 vaultwarden_port: "3012"
 

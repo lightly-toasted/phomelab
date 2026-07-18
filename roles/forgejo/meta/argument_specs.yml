@@ -1,0 +1,47 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Forgejo
+    description:
+      - Builds Forgejo from nixpkgs and creates an s6 service
+        with app.ini configuration file.
+    options:
+      forgejo_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Forgejo service
+      forgejo_user:
+        type: str
+        required: false
+        default: forgejo
+        description: System user for the Forgejo service
+      forgejo_group:
+        type: str
+        required: false
+        default: forgejo
+        description: System group for the Forgejo service
+      forgejo_port:
+        type: str
+        required: false
+        default: "3009"
+        description: TCP port for the Forgejo web interface
+      forgejo_data_dir:
+        type: path
+        required: false
+        default: /var/lib/forgejo
+        description: Data directory for Forgejo
+      forgejo_config_dir:
+        type: path
+        required: false
+        default: /etc/forgejo
+        description: Configuration directory for Forgejo
+      forgejo_config:
+        type: str
+        required: false
+        description: >-
+          Raw app.ini configuration content for Forgejo. See
+          [`defaults/main.yml#L10-L12`](https://github.com/lightly-toasted/phomelab/blob/main/roles/forgejo/defaults/main.yml#L10-L12)
+          for an example and the
+          [upstream docs](https://forgejo.org/docs/latest/admin/config-cheat-sheet)
+          for all options.

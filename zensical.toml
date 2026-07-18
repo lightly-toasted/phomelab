@@ -1,0 +1,15 @@
+[project]
+site_name = "phomelab"
+site_description = "Run your homelab on phones"
+repo_url = "https://github.com/lightly-toasted/phomelab"
+edit_uri = "blob/main/docs/"
+
+[project.theme]
+features = [
+  "navigation.instant",
+  "navigation.expand",
+  "search.highlight",
+]
+
+[project.theme.palette]
+primary = "indigo"

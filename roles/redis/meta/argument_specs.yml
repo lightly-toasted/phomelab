@@ -1,0 +1,28 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Redis
+    description:
+      - Builds Redis from nixpkgs and creates an s6 service with
+        Unix socket configuration.
+    options:
+      redis_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Redis service
+      redis_user:
+        type: str
+        required: false
+        default: redis
+        description: System user for the Redis service
+      redis_group:
+        type: str
+        required: false
+        default: "{{ redis_user }}"
+        description: System group for the Redis service
+      redis_socket:
+        type: path
+        required: false
+        default: /run/redis/redis.sock
+        description: Path to the Redis Unix socket

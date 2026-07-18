@@ -1,0 +1,52 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy c2fmzq
+    description:
+      - Builds c2fmzq from a configurable nix package attribute
+        and creates an s6 service with CLI flags and environment
+        variables for configuration.
+    options:
+      c2fmzq_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the c2fmzq service
+      c2fmzq_package:
+        type: str
+        required: false
+        default: nixpkgs#c2fmzq
+        description: Nix package attribute for c2fmzq
+      c2fmzq_package_path:
+        type: path
+        required: false
+        default: /opt/c2fmzq
+        description: Nix build output path for c2fmzq
+      c2fmzq_user:
+        type: str
+        required: false
+        default: c2fmzq
+        description: System user for the c2fmzq service
+      c2fmzq_group:
+        type: str
+        required: false
+        default: c2fmzq
+        description: System group for the c2fmzq service
+      c2fmzq_data_dir:
+        type: path
+        required: false
+        description: Data directory for c2fmzq
+      c2fmzq_address:
+        type: str
+        required: false
+        default: "127.0.0.1:3011"
+        description: Listen address and port for c2fmzq
+      c2fmzq_env:
+        type: dict
+        required: false
+        description: >-
+          Environment variables for c2fmzq configuration. See
+          [`defaults/main.yml#L10-L11`](https://github.com/lightly-toasted/phomelab/blob/main/roles/c2fmzq/defaults/main.yml#L10-L11)
+          for an example and the
+          [upstream docs](https://github.com/c2FmZQ/photos#build-and-run-it-locally)
+          for all options.

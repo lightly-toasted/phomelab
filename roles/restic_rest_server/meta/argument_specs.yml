@@ -1,0 +1,38 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy restic REST server
+    description:
+      - Builds restic-rest-server from nixpkgs and creates an s6 service
+        with htpasswd authentication.
+    options:
+      restic_rest_server_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the restic REST server service
+      restic_rest_server_user:
+        type: str
+        required: false
+        default: restic_rest_server
+        description: System user for the restic REST server
+      restic_rest_server_group:
+        type: str
+        required: false
+        description: System group for the restic REST server
+      restic_rest_server_data_dir:
+        type: path
+        required: false
+        description: Data directory for restic repositories
+      restic_rest_server_port:
+        type: str
+        required: false
+        default: "3003"
+        description: TCP port for the restic REST server
+      restic_rest_server_htpasswd_users:
+        type: list
+        required: false
+        description: >-
+          List of users with name and password for htpasswd authentication. See
+          [`defaults/main.yml#L7-L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/restic_rest_server/defaults/main.yml#L7-L8)
+          for an example.

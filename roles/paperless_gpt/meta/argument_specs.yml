@@ -1,0 +1,31 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy paperless-gpt
+    description:
+      - Builds paperless-gpt from a pinned flake commit and creates
+        an s6 service with environment variable configuration for
+        LLM providers and OCR settings.
+    options:
+      paperless_gpt_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the paperless-gpt service
+      paperless_gpt_user:
+        type: str
+        required: false
+        default: paperless-gpt
+        description: System user for the paperless-gpt service
+      paperless_gpt_group:
+        type: str
+        required: false
+        default: paperless-gpt
+        description: System group for the paperless-gpt service
+      paperless_gpt_env:
+        type: dict
+        required: false
+        description: >-
+          Environment variables for paperless-gpt configuration. See
+          [`defaults/main.yml#L5-L19`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_gpt/defaults/main.yml#L5-L19)
+          for an example.
