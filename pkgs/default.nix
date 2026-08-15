@@ -1,5 +1,5 @@
 { pkgs, system }:
 
 {
-  paperless-gpt = pkgs.callPackage ./paperless-gpt { };
+  paperless-gpt = pkgs.callPackage ./paperless-gpt.nix { };
 }

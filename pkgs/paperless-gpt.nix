@@ -2,7 +2,7 @@
 
 let
   pname = "paperless-gpt";
-  version = "0.25.1";
+  version = "0.27.0";
 
   src = fetchFromGitHub {
     owner = "icereed";
@@ -18,10 +18,6 @@ let
     npmDepsHash = "sha256-7PxH8kS28x8Sv5tD+Kohdv1CakKh8gIA9e9LGcWA960=";
 
     nodejs = nodejs_22;
-
-    patches = [
-      ./vite-configurable-proxy.patch
-    ];
 
     installPhase = ''
       cp -r dist $out
