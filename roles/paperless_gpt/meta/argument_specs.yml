@@ -3,9 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy paperless-gpt
     description:
-      - Builds paperless-gpt from a pinned flake commit and creates
-        an s6 service with environment variable configuration for
-        LLM providers and OCR settings.
+      - Builds paperless-gpt from a pinned flake commit and creates an s6 service with environment variable configuration for LLM providers and OCR settings.
     options:
       paperless_gpt_enabled:
         type: bool
@@ -22,10 +20,25 @@ argument_specs:
         required: false
         default: paperless-gpt
         description: System group for the paperless-gpt service
+      paperless_gpt_data_dir:
+        type: path
+        required: false
+        default: /var/lib/paperless-gpt
+        description: Data directory for paperless-gpt
       paperless_gpt_env:
         type: dict
         required: false
         description: >-
           Environment variables for paperless-gpt configuration. See
-          [`defaults/main.yml#L5-L19`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_gpt/defaults/main.yml#L5-L19)
+          [`defaults/main.yml#L7-L21`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_gpt/defaults/main.yml#L7-L21)
+          and the [upstream documentation](https://github.com/icereed/paperless-gpt#environment-variables)
+          for an example.
+      paperless_gpt_prompts:
+        type: dict
+        required: false
+        description: >-
+          Map of prompt template filename to content. Template files are deployed under `{{ paperless_gpt_data_dir }}/default_prompts/`
+          and `{{ paperless_gpt_data_dir }}/prompts/`.
+          See [`defaults/main.yml#L23-L211`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_gpt/defaults/main.yml#L23-L211)
+          and the [upstream default prompts](https://github.com/icereed/paperless-gpt/tree/main/default_prompts)
           for an example.

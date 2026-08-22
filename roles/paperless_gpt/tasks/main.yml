@@ -21,11 +21,37 @@
     s6_service_command: "exec /opt/paperless-gpt/bin/paperless-gpt"
     s6_service_env: "{{ paperless_gpt_env }}"
     s6_service_state: "{{ paperless_gpt_state }}"
+    s6_service_workdir: "{{ paperless_gpt_data_dir }}"
 
-- name: Copy default_prompts folder
-  ansible.builtin.copy:
-    src: paperless-gpt/default_prompts
-    dest: /var/lib/paperless-gpt/
+- name: Ensure paperless-gpt directories exist
+  when: paperless_gpt_enabled
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
     owner: "{{ paperless_gpt_user }}"
     group: "{{ paperless_gpt_group }}"
-    mode: "0755"
+    recurse: true
+  loop:
+    - "{{ paperless_gpt_data_dir }}"
+    - "{{ paperless_gpt_data_dir }}/default_prompts"
+    - "{{ paperless_gpt_data_dir }}/prompts"
+
+- name: Ensure default_prompts exist
+  when: paperless_gpt_enabled
+  ansible.builtin.copy:
+    dest: "{{ paperless_gpt_data_dir }}/default_prompts/{{ item.key }}"
+    content: "{{ item.value }}"
+    owner: "{{ paperless_gpt_user }}"
+    group: "{{ paperless_gpt_group }}"
+    mode: "0644"
+  loop: "{{ paperless_gpt_prompts | dict2items }}"
+
+- name: Ensure prompts exist
+  when: paperless_gpt_enabled
+  ansible.builtin.copy:
+    dest: "{{ paperless_gpt_data_dir }}/prompts/{{ item.key }}"
+    content: "{{ item.value }}"
+    owner: "{{ paperless_gpt_user }}"
+    group: "{{ paperless_gpt_group }}"
+    mode: "0644"
+  loop: "{{ paperless_gpt_prompts | dict2items }}"
