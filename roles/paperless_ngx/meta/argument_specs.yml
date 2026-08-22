@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Paperless-ngx
     description:
-      - Builds Paperless-ngx from nixpkgs (pinned commit) and creates
-        multiple s6 services (web, worker, beat, consumer).
+      - Builds Paperless-ngx from nixpkgs (pinned commit) and creates multiple s6 services (web, worker, beat, consumer).
     options:
       paperless_ngx_enabled:
         type: bool
@@ -21,54 +20,26 @@ argument_specs:
         required: false
         default: redis
         description: Supplementary groups for the Paperless-ngx user
+      paperless_ngx_env:
+        type: dict
+        required: false
+        description: >-
+          Environment variables for Paperless-ngx configuration. See
+          [`defaults/main.yml#L7-L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_ngx/defaults/main.yml#L7-L8)
+          and the [upstream documentation](https://docs.paperless-ngx.com/configuration)
+          for an example.
       paperless_ngx_port:
         type: str
         required: false
         default: "3002"
         description: TCP port for the Paperless-ngx web service
-      paperless_ngx_redis:
+      paperless_ngx_package:
         type: str
         required: false
-        description: Redis connection string for Paperless-ngx
-      paperless_ngx_hostname:
-        type: str
-        required: false
-        description: Hostname used by Paperless-ngx for generating URLs
-      paperless_ngx_secret_key:
-        type: str
-        required: false
-        description: >-
-          Django secret key for Paperless-ngx. See
-          [`defaults/main.yml#L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_ngx/defaults/main.yml#L8)
-          for an example.
-      paperless_ngx_data_root:
-        type: path
-        required: false
-        default: /var/lib/paperless
-        description: Root data directory for Paperless-ngx
-      paperless_ngx_dirs:
-        type: dict
-        required: false
-        description: >-
-          Dictionary of sub-directory paths under data_root. See
-          [`defaults/main.yml#L11-L16`](https://github.com/lightly-toasted/phomelab/blob/main/roles/paperless_ngx/defaults/main.yml#L11-L16)
-          for an example.
+        default: nixpkgs/21e032ff95225fb81164a2b2b696c5f6841fcb62#paperless-ngx
+        description: Nix package attribute for Paperless-ngx
       paperless_ngx_package_path:
         type: path
         required: false
         default: /opt/paperless
         description: Nix build output path for Paperless-ngx
-      paperless_ngx_ocr_language:
-        type: str
-        required: false
-        default: kor
-        description: OCR language for Paperless-ngx
-      paperless_ngx_time_zone:
-        type: str
-        required: false
-        default: Asia/Seoul
-        description: Time zone for Paperless-ngx
-      paperless_ngx_services:
-        type: list
-        required: true
-        description: List of service definitions with name and command (defined in vars/)

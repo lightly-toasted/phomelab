@@ -1,7 +1,7 @@
 ---
 paperless_ngx_services:
   - name: paperless-web
-    command: "exec /opt/paperless/bin/paperless-ngx runserver 127.0.0.1:{{ paperless_ngx_port }}"
+    command: "exec /opt/paperless/bin/paperless-ngx runserver 0.0.0.0:{{ paperless_ngx_port }}"
   - name: paperless-worker
     command: "exec /opt/paperless/bin/celery --app paperless worker --loglevel INFO"
   - name: paperless-beat
@@ -9,4 +9,13 @@ paperless_ngx_services:
   - name: paperless-consumer
     command: "exec /opt/paperless/bin/paperless-ngx document_consumer"
 
-paperless_ngx_static_dir: "{{ paperless_ngx_package_path }}/lib/paperless-ngx/static"
+paperless_ngx_env_default:
+  PAPERLESS_REDIS: "unix://{{ redis_socket }}"
+  PAPERLESS_REDIS_PREFIX: "paperless"
+
+  PAPERLESS_CONSUMPTION_DIR: "/var/lib/paperless/consume"
+  PAPERLESS_DATA_DIR: "/var/lib/paperless/data"
+  PAPERLESS_EMPTY_TRASH_DIR: "/var/lib/paperless/media/trash"
+  PAPERLESS_MEDIA_ROOT: "/var/lib/paperless/media"
+  PAPERLESS_STATICDIR: "{{ paperless_ngx_package_path }}/lib/paperless-ngx/static"
+  PAPERLESS_LOGGING_DIR: ""
