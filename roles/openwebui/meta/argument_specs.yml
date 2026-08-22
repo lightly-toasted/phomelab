@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Open WebUI
     description:
-      - Installs Open WebUI via pip into a virtualenv and creates
-        an s6 service with environment variable configuration.
+      - Installs Open WebUI via pip into a virtualenv and creates an s6 service with environment variable configuration.
     options:
       openwebui_enabled:
         type: bool

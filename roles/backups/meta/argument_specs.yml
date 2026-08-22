@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure automated backup services
     description:
-      - Deploys scheduled backup scripts using restic and snooze.
-        Each backup entry defines paths, repository, and schedule.
+      - Deploys scheduled backup scripts using restic and snooze. Each backup entry defines paths, repository, and schedule.
     options:
       backups_enabled:
         type: bool

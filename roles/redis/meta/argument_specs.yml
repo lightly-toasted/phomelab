@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Redis
     description:
-      - Builds Redis from nixpkgs and creates an s6 service with
-        Unix socket configuration.
+      - Builds Redis from nixpkgs and creates an s6 service with Unix socket configuration.
     options:
       redis_enabled:
         type: bool
