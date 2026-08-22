@@ -16,7 +16,7 @@ touch "$TIMEFILE"
 
 {% if item.restic_prune_opts is defined and item.restic_prune_opts | length > 0 %}
 {{ restic_package_path }}/bin/restic forget --prune \
-  --repo {{ item.restic_repo }}
+  --repo {{ item.restic_repo }} \
   {{ item.restic_prune_opts | join(' ') }}
 {% endif %}
 
