@@ -36,7 +36,6 @@ argument_specs:
       paperless_ngx_package:
         type: str
         required: false
-        default: nixpkgs/21e032ff95225fb81164a2b2b696c5f6841fcb62#paperless-ngx
         description: Nix package attribute for Paperless-ngx
       paperless_ngx_package_path:
         type: path
