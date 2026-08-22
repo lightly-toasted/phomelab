@@ -3,9 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy c2fmzq
     description:
-      - Builds c2fmzq from a configurable nix package attribute
-        and creates an s6 service with CLI flags and environment
-        variables for configuration.
+      - Builds c2fmzq from a configurable nix package attribute and creates an s6 service with CLI flags and environment variables for configuration.
     options:
       c2fmzq_enabled:
         type: bool

@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Opengist
     description:
-      - Downloads a pre-built Opengist tarball from GitHub releases
-        and creates an s6 service.
+      - Downloads a pre-built Opengist tarball from GitHub releases and creates an s6 service.
     options:
       opengist_enabled:
         type: bool

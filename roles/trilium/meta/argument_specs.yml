@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Trilium
     description:
-      - Builds Trilium server from nixpkgs and creates an s6 service
-        with config.ini for application settings.
+      - Builds Trilium server from nixpkgs and creates an s6 service with config.ini for application settings.
     options:
       trilium_enabled:
         type: bool

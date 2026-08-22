@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Navidrome
     description:
-      - Builds Navidrome from nixpkgs and creates an s6 service
-        with music streaming configuration.
+      - Builds Navidrome from nixpkgs and creates an s6 service with music streaming configuration.
     options:
       navidrome_enabled:
         type: bool

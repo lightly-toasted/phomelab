@@ -3,9 +3,8 @@ argument_specs:
   main:
     short_description: Configure and deploy Vaultwarden
     description:
-      - Builds Vaultwarden and optionally the web vault from
-        configurable nix package attributes. Creates an s6 service
-        with merged default and user-provided environment variables.
+      - Builds Vaultwarden and optionally the web vault from configurable nix package attributes. Creates an s6 service with merged default and user-provided
+        environment variables.
     options:
       vaultwarden_enabled:
         type: bool
@@ -36,8 +35,8 @@ argument_specs:
         type: dict
         required: false
         description: User-provided environment variables (merged with computed defaults). See
-          [`defaults/main.yml#L7-L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/vaultwarden/defaults/main.yml#L7-L8) and
-          [Vaultwarden .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template) for an example.
+          [`defaults/main.yml#L7-L8`](https://github.com/lightly-toasted/phomelab/blob/main/roles/vaultwarden/defaults/main.yml#L7-L8) and [Vaultwarden
+          .env.template](https://github.com/dani-garcia/vaultwarden/blob/main/.env.template) for an example.
       vaultwarden_port:
         type: str
         required: false

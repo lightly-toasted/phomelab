@@ -3,8 +3,7 @@ argument_specs:
   main:
     short_description: Configure and deploy Cloudflare Tunnel
     description:
-      - Builds cloudflared from nixpkgs and creates an s6 service
-        with credentials file and tunnel configuration.
+      - Builds cloudflared from nixpkgs and creates an s6 service with credentials file and tunnel configuration.
     options:
       cloudflared_enabled:
         type: bool
