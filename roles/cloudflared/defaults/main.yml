@@ -1,5 +1,7 @@
 ---
 cloudflared_enabled: false
+cloudflared_package: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#cloudflared
+cloudflared_package_path: /opt/cloudflared
 cloudflared_user: cloudflared
 cloudflared_group: cloudflared
 cloudflared_tunnel: "00000000-0000-0000-0000-000000000000"
