@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the cloudflared tunnel service
+      cloudflared_package:
+        type: str
+        required: false
+        default: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#cloudflared
+        description: Nix package attribute for cloudflared
+      cloudflared_package_path:
+        type: path
+        required: false
+        default: /opt/cloudflared
+        description: Nix build output path for cloudflared
       cloudflared_user:
         type: str
         required: false
@@ -34,4 +44,4 @@ argument_specs:
         type: dict
         required: false
         description: Ingress rules and other tunnel configuration (merged with base tunnel config). See
-          [`defaults/main.yml#L7-L12`](https://github.com/lightly-toasted/phomelab/blob/main/roles/cloudflared/defaults/main.yml#L7-L12) for an example.
+          [`defaults/main.yml#L9-L14`](https://github.com/lightly-toasted/phomelab/blob/main/roles/cloudflared/defaults/main.yml#L9-L14) for an example.

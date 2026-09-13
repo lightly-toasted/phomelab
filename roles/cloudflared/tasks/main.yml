@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: nixpkgs#cloudflared
-    nix_build_out: /opt/cloudflared
+    nix_build_attr: "{{ cloudflared_package }}"
+    nix_build_out: "{{ cloudflared_package_path }}"
     nix_build_state: "{{ cloudflared_state }}"
 
 - name: Create s6 service
@@ -16,7 +16,7 @@
     name: s6_service
   vars:
     s6_service_name: cloudflared
-    s6_service_command: "exec /opt/cloudflared/bin/cloudflared tunnel run"
+    s6_service_command: "exec {{ cloudflared_package_path }}/bin/cloudflared tunnel run"
     s6_service_user_name: "{{ cloudflared_user }}"
     s6_service_state: "{{ cloudflared_state }}"
 
