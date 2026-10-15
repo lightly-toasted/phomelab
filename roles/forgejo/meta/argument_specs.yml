@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the Forgejo service
+      forgejo_package:
+        type: str
+        required: false
+        default: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#forgejo
+        description: Nix package attribute for Forgejo
+      forgejo_package_path:
+        type: path
+        required: false
+        default: /opt/forgejo
+        description: Nix build output path for Forgejo
       forgejo_user:
         type: str
         required: false

@@ -1,5 +1,7 @@
 ---
 forgejo_enabled: false
+forgejo_package: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#forgejo
+forgejo_package_path: /opt/forgejo
 forgejo_user: forgejo
 forgejo_group: forgejo
 
