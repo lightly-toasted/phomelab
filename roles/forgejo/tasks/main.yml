@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: nixpkgs#forgejo
-    nix_build_out: /opt/forgejo
+    nix_build_attr: "{{ forgejo_package }}"
+    nix_build_out: "{{ forgejo_package_path }}"
     nix_build_state: "{{ forgejo_state }}"
 
 - name: Create s6 service
@@ -17,10 +17,10 @@
   vars:
     s6_service_name: forgejo
     s6_service_command: >
-      exec /opt/forgejo/bin/forgejo web
-      --port {{ forgejo_port }}
-      --work-path {{ forgejo_data_dir }}
-      --config {{ forgejo_config_dir }}/app.ini"
+      exec /opt/forgejo/bin/forgejo web \
+        --port {{ forgejo_port }} \
+        --work-path {{ forgejo_data_dir }} \
+        --config {{ forgejo_config_dir }}/app.ini
     s6_service_user_name: "{{ forgejo_user }}"
     s6_service_user_group: "{{ forgejo_group }}"
     s6_service_user_home: "{{ forgejo_data_dir }}"
