@@ -1,0 +1,40 @@
+---
+- name: Set copyparty state fact
+  ansible.builtin.set_fact:
+    copyparty_state: "{{ 'present' if copyparty_enabled else 'absent' }}"
+
+- name: Build copyparty
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ copyparty_package }}"
+    nix_build_out: "{{ copyparty_package_path }}"
+    nix_build_state: "{{ copyparty_state }}"
+
+- name: Create s6 service
+  ansible.builtin.include_role:
+    name: s6_service
+  vars:
+    s6_service_name: copyparty
+    s6_service_command: "exec {{ copyparty_package_path }}/bin/copyparty -c {{ copyparty_config_path }}"
+    s6_service_user_name: "{{ copyparty_user }}"
+    s6_service_user_group: "{{ copyparty_group }}"
+    s6_service_state: "{{ copyparty_state }}"
+
+- name: Ensure copyparty config directory exist
+  when: copyparty_enabled
+  ansible.builtin.file:
+    path: "{{ copyparty_config_path | dirname }}"
+    state: directory
+    owner: "{{ copyparty_user }}"
+    group: "{{ copyparty_group }}"
+    recurse: true
+
+- name: Create copyparty.conf
+  when: copyparty_enabled
+  ansible.builtin.copy:
+    dest: "{{ copyparty_config_path }}"
+    content: "{{ copyparty_config }}"
+    owner: "{{ copyparty_user }}"
+    group: "{{ copyparty_group }}"
+    mode: "0644"

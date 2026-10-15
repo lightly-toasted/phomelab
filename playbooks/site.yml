@@ -26,6 +26,7 @@
     - { role: rustypaste, tags: [rustypaste, service] }
     - { role: c2fmzq, tags: [c2fmzq, service] }
     - { role: vaultwarden, tags: [vaultwarden, service] }
+    - { role: copyparty, tags: [copyparty, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }
