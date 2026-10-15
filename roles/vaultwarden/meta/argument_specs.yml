@@ -14,7 +14,7 @@ argument_specs:
       vaultwarden_package:
         type: str
         required: false
-        default: nixpkgs#vaultwarden
+        default: nixpkgs/7dd199b0e2993e37b4775ed66b1c291699608c9f#vaultwarden
         description: Nix package attribute for Vaultwarden
       vaultwarden_package_path:
         type: path
@@ -50,7 +50,7 @@ argument_specs:
       vaultwarden_web_vault_package:
         type: str
         required: false
-        default: nixpkgs#vaultwarden.webvault
+        default: nixpkgs/73e728ddb6b7a12d18808f510813a13ee1fe4cce#vaultwarden-webvault
         description: Nix package attribute for the Vaultwarden web vault
       vaultwarden_web_vault_package_path:
         type: path
