@@ -10,6 +10,7 @@ import yaml
 ROLES_DIR = Path("roles")
 DOCS_DIR = Path("docs")
 ROLES_DOCS_DIR = DOCS_DIR / "roles"
+PACKAGE_VARIABLE_SUFFIX = "_package"
 
 
 def load_argument_specs(role_dir: Path) -> dict[str, Any] | None:
@@ -102,8 +103,12 @@ def generate_role_doc(
         default = fmt_default(var_spec.get("default"))
         required = var_spec.get("required", False)
         desc_text = desc
+
         if required:
-            desc_text = f"**Required.** {desc}" if desc else "**Required.**"
+            desc_text = f"**Required.** {desc}".strip()
+        # <details> tags are used because flake references are usually long
+        if var_name.endswith(PACKAGE_VARIABLE_SUFFIX) and default: 
+            default = f"<details><summary>attr</summary>`{default}`</details>"
 
         var_cell = f"`{var_name}`"
         type_cell = t or "any"
