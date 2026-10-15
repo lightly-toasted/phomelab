@@ -1,0 +1,19 @@
+---
+copyparty_enabled: false
+copyparty_package: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#copyparty
+copyparty_package_path: /opt/copyparty
+copyparty_user: copyparty
+copyparty_group: copyparty
+
+copyparty_config_path: /etc/copyparty/copyparty.conf
+# https://github.com/9001/copyparty/blob/hovudstraum/docs/example.conf
+copyparty_config: |
+  [global]
+    p: 3013
+    i: 127.0.0.1
+    e2dsa
+
+  [/]
+    /var/lib/copyparty/data
+    accs:
+      r: *

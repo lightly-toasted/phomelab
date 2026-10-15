@@ -1,0 +1,43 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy copyparty
+    description:
+      - Builds copyparty from a configurable nix package attribute and creates an s6 service with a raw INI configuration file.
+    options:
+      copyparty_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the copyparty service
+      copyparty_package:
+        type: str
+        required: false
+        default: nixpkgs/c27cdad491a991b11ed731760aa2ef8db0cb0410#copyparty
+        description: Nix package attribute for copyparty
+      copyparty_package_path:
+        type: path
+        required: false
+        default: /opt/copyparty
+        description: Nix build output path for copyparty
+      copyparty_user:
+        type: str
+        required: false
+        default: copyparty
+        description: System user for the copyparty service
+      copyparty_group:
+        type: str
+        required: false
+        default: copyparty
+        description: System group for the copyparty service
+      copyparty_config:
+        type: str
+        required: false
+        description: Raw configuration content for copyparty. See
+          [`defaults/main.yml#L9-L19`](https://github.com/lightly-toasted/phomelab/blob/main/roles/copyparty/defaults/main.yml#L9-L19) and [copyparty
+          quickstart](https://github.com/9001/copyparty?tab=readme-ov-file#quickstart) for an example.
+      copyparty_config_path:
+        type: path
+        required: false
+        default: /etc/copyparty/copyparty.conf
+        description: Path to the copyparty configuration file
