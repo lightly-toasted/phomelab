@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nix-versions.url = "github:denful/nix-versions";
   };
 
   outputs = inputs@{ flake-parts, ... }:
@@ -24,6 +25,7 @@
             ansible-lint
             just
             zensical
+            inputs.nix-versions.packages.${system}.default
           ];
 
           shellHook = ''
