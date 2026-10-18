@@ -1,0 +1,12 @@
+---
+backrest_enabled: false
+backrest_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#backrest
+backrest_package_path: /opt/backrest
+
+backrest_port: "3014"
+backrest_data_dir: /var/lib/backrest
+backrest_cache_dir: "{{ backrest_data_dir }}/cache"
+backrest_config_path: /etc/backrest/config.json
+
+# Optional dict (JSON). If empty, the existing config is left untouched.
+backrest_config: {}

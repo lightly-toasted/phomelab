@@ -15,7 +15,7 @@
     - { role: opengist, tags: [opengist, service] }
     - { role: paperless_ngx, tags: [paperless_ngx, service] }
     - { role: restic_rest_server, tags: [restic_rest_server, service] }
-    - { role: backups, tags: [backups, service] }
+    - { role: backrest, tags: [backrest, service] }
     - { role: navidrome, tags: [navidrome, service] }
     - { role: openwebui, tags: [openwebui, service] }
     - { role: trilium, tags: [trilium, service] }
