@@ -38,7 +38,7 @@
         {% if nix_build_allow_unfree %}
         --impure
         {% endif %}
-        {% if nix_build_inputs_from is defined and nix_build_inputs_from | length > 0 %}
+        {% if nix_build_inputs_from is defined and nix_build_inputs_from | length > 0 and nix_build_attr.startswith("nixpkgs#") %}
         --inputs-from {{ nix_build_inputs_from }}
         {% endif %}
         {{ nix_build_attr }} -o {{ nix_build_out }}
