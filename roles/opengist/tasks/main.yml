@@ -55,7 +55,7 @@
   when: opengist_enabled
   ansible.builtin.copy:
     dest: "{{ opengist_config_path }}"
-    content: "{{ opengist_config | to_nice_yaml }}"
+    content: "{{ opengist_config_default | combine(opengist_config, recursive=true) | to_nice_yaml }}"
     owner: "{{ opengist_user }}"
     group: "{{ opengist_group }}"
     mode: "0644"

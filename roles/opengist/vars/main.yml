@@ -1,0 +1,6 @@
+---
+opengist_config_default:
+  log-output: stdout
+  opengist-home: "{{ opengist_data_dir }}"
+  http.host: 0.0.0.0
+  http.port: 3001
