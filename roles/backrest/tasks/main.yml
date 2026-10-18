@@ -1,0 +1,48 @@
+---
+- name: Set Backrest state fact
+  ansible.builtin.set_fact:
+    backrest_state: "{{ 'present' if backrest_enabled else 'absent' }}"
+
+- name: Build Backrest
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ backrest_package }}"
+    nix_build_out: "{{ backrest_package_path }}"
+    nix_build_state: "{{ backrest_state }}"
+
+- name: Create s6 service
+  ansible.builtin.include_role:
+    name: s6_service
+  vars:
+    s6_service_name: backrest
+    s6_service_create_user: false
+    s6_service_command: "exec {{ backrest_package_path }}/bin/backrest"
+    s6_service_state: "{{ backrest_state }}"
+    s6_service_env:
+      BACKREST_PORT: "{{ backrest_port }}"
+      BACKREST_CONFIG: "{{ backrest_config_path }}"
+      BACKREST_DATA: "{{ backrest_data_dir }}"
+      BACKREST_RESTIC_COMMAND: "{{ restic_package_path }}/bin/restic"
+      XDG_CACHE_HOME: "{{ backrest_cache_dir }}"
+
+- name: Ensure Backrest directories exist
+  when: backrest_enabled
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    recurse: true
+  loop:
+    - "{{ backrest_data_dir }}"
+    - "{{ backrest_cache_dir }}"
+    - "{{ backrest_config_path | dirname }}"
+
+- name: Create config.json
+  when:
+    - backrest_enabled
+    - backrest_config | length > 0
+  ansible.builtin.copy:
+    dest: "{{ backrest_config_path }}"
+    content: "{{ backrest_config | to_json }}"
+    mode: "0600"
+  no_log: true

@@ -1,0 +1,50 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy Backrest
+    description:
+      - Builds Backrest and creates an s6 service.
+      - Backrest is a web UI and orchestrator for restic backup.
+    options:
+      backrest_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Backrest service
+      backrest_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f4#backrest
+        description: Nix package attribute for Backrest
+      backrest_package_path:
+        type: path
+        required: false
+        default: /opt/backrest
+        description: Nix build output path for Backrest
+      backrest_port:
+        type: str
+        required: false
+        default: "3014"
+        description: Address and port for the Backrest
+      backrest_data_dir:
+        type: path
+        required: false
+        default: /var/lib/backrest
+        description: Data directory for Backrest
+      backrest_cache_dir:
+        type: path
+        required: false
+        default: /var/lib/backrest/cache
+        description: Cache directory for restic
+      backrest_config_path:
+        type: path
+        required: false
+        default: /etc/backrest/config.json
+        description: Path to the Backrest configuration file
+      backrest_config:
+        type: dict
+        required: false
+        default: {}
+        description: >-
+          Optional Backrest configuration serialized as JSON. If empty, the
+          existing configuration is left untouched.
