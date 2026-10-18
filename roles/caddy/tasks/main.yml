@@ -30,9 +30,9 @@
     group: "{{ caddy_group }}"
     recurse: true
 
-- name: Create Caddyfile
+- name: Copy Caddyfile
   when: caddy_enabled
-  ansible.builtin.template:
-    src: Caddyfile
-    dest: /etc/caddy/
+  ansible.builtin.copy:
+    dest: "/etc/caddy/Caddyfile"
+    content: "{{ caddy_caddyfile }}"
     mode: "0644"
