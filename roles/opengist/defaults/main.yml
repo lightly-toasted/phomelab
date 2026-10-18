@@ -1,11 +1,16 @@
 ---
 opengist_enabled: false
-opengist_version: "1.11.1"
-opengist_arch: arm64
-opengist_url: "https://github.com/thomiceli/opengist/releases/download/v{{ opengist_version }}/opengist{{ opengist_version }}-linux-{{ opengist_arch }}.tar.gz"
-opengist_sha256: "d3dd6a5496178c61cf87f694c44b832fb6ba56b1acd3e2eced0f20b4cdb9a403"
-opengist_tarball: "/var/cache/opengist-{{ opengist_version }}.tar.gz"
-
+opengist_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#opengist
+opengist_package_path: /opt/opengist
 opengist_user: gist
 opengist_group: opengist
-opengist_port: "3001"
+
+opengist_data_dir: /var/lib/opengist
+opengist_config_path: /etc/opengist/config.yml
+
+# https://github.com/thomiceli/opengist/blob/master/config.yml
+opengist_config:
+  log-output: stdout
+  opengist-home: /var/lib/opengist/
+  http.host: 0.0.0.0
+  http.port: 3001

@@ -3,15 +3,40 @@
   ansible.builtin.set_fact:
     opengist_state: "{{ 'present' if opengist_enabled else 'absent' }}"
 
-- name: Ensure s6 service is {{ opengist_state }}
+- name: Check for legacy Opengist install directory
+  when: opengist_enabled
+  ansible.builtin.stat:
+    path: "{{ opengist_package_path }}"
+    follow: false
+  register: opengist_package_path_stat
+
+- name: Remove legacy Opengist install directory
+  when:
+    - opengist_enabled
+    - opengist_package_path_stat.stat.exists
+    - opengist_package_path_stat.stat.isdir | default(false)
+    - not (opengist_package_path_stat.stat.islnk | default(false))
+  ansible.builtin.file:
+    path: "{{ opengist_package_path }}"
+    state: absent
+
+- name: Build Opengist
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ opengist_package }}"
+    nix_build_out: "{{ opengist_package_path }}"
+    nix_build_state: "{{ opengist_state }}"
+
+- name: Create s6 service
   ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: opengist
-    s6_service_command: "exec /opt/opengist/opengist --config /etc/opengist/config.yml start"
+    s6_service_command: "exec {{ opengist_package_path }}/bin/opengist --config {{ opengist_config_path }} start"
     s6_service_user_name: "{{ opengist_user }}"
     s6_service_user_group: "{{ opengist_group }}"
-    s6_service_user_home: /var/lib/opengist
+    s6_service_user_home: "{{ opengist_data_dir }}"
     s6_service_state: "{{ opengist_state }}"
 
 - name: Ensure Opengist directories exist
@@ -23,31 +48,14 @@
     group: "{{ opengist_group }}"
     recurse: true
   loop:
-    - "/opt/opengist"
-    - "/var/lib/opengist"
-    - "/etc/opengist"
-
-- name: Fetch Opengist tarball
-  when: opengist_enabled
-  ansible.builtin.get_url:
-    url: "{{ opengist_url }}"
-    dest: "{{ opengist_tarball }}"
-    checksum: "sha256:{{ opengist_sha256 }}"
-    mode: "0644"
-
-- name: Extract tarball
-  when: opengist_enabled
-  ansible.builtin.unarchive:
-    src: "{{ opengist_tarball }}"
-    dest: "/opt/opengist"
-    remote_src: true
-    creates: "/opt/opengist/opengist"
-    extra_opts:
-      - --strip-components=1
+    - "{{ opengist_data_dir }}"
+    - "{{ opengist_config_path | dirname }}"
 
 - name: Create config.yml
   when: opengist_enabled
-  ansible.builtin.template:
-    src: config.yml.j2
-    dest: /etc/opengist/config.yml
+  ansible.builtin.copy:
+    dest: "{{ opengist_config_path }}"
+    content: "{{ opengist_config | to_nice_yaml }}"
+    owner: "{{ opengist_user }}"
+    group: "{{ opengist_group }}"
     mode: "0644"
