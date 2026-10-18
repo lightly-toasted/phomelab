@@ -40,7 +40,7 @@ argument_specs:
         required: false
         description: Configuration for Opengist as a mapping, rendered to YAML.
           See
-          [`defaults/main.yml#L12-L16`](https://github.com/lightly-toasted/phomelab/blob/main/roles/opengist/defaults/main.yml#L12-L16)
+          [`defaults/main.yml#L12-L14`](https://github.com/lightly-toasted/phomelab/blob/main/roles/opengist/defaults/main.yml#L12-L14)
           for an example and the [upstream
           config.yml](https://github.com/thomiceli/opengist/blob/master/config.yml)
           for all options.

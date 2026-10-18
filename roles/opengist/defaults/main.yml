@@ -10,7 +10,5 @@ opengist_config_path: /etc/opengist/config.yml
 
 # https://github.com/thomiceli/opengist/blob/master/config.yml
 opengist_config:
-  log-output: stdout
-  opengist-home: /var/lib/opengist/
   http.host: 0.0.0.0
   http.port: 3001
