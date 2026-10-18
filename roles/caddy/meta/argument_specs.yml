@@ -30,16 +30,6 @@ argument_specs:
         required: false
         default: caddy
         description: System group for the Caddy service
-      caddy_http_port:
-        type: str
-        required: false
-        default: "8080"
-        description: HTTP port for Caddy
-      caddy_https_port:
-        type: str
-        required: false
-        default: "8443"
-        description: HTTPS port for Caddy
       caddy_env:
         type: dict
         required: false
