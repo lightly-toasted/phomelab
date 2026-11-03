@@ -1,20 +1,10 @@
 ---
 openwebui_enabled: false
+openwebui_package: nixpkgs/8edc0c72e3a38faf5434e40d1f19431125fe4b30#open-webui
+openwebui_package_path: /opt/openwebui
+openwebui_user: openwebui
+openwebui_group: openwebui
 openwebui_host: "0.0.0.0"
 openwebui_port: "3005"
-openwebui_env:
-  DATA_DIR: "/var/lib/openwebui"
-
-  # Logging
-  ENABLE_AUDIT_STDOUT: "True"
-  ENABLE_AUDIT_LOGS_FILE: "False"
-
-  # Performance & RAM
-  ENABLE_BASE_MODELS_CACHE: "True"
-  MODELS_CACHE_TTL: "300"
-  ENABLE_QUERIES_CACHE: "True"
-  RAG_SYSTEM_CONTEXT: "True"
-  RAG_EMBEDDING_ENGINE: "openai"
-  ENABLE_REALTIME_CHAT_SAVE: "False"
-  AUDIO_STT_ENGINE: "webapi"
-  ENABLE_AUTOCOMPLETE_GENERATION: "False"
+openwebui_data_dir: /var/lib/openwebui
+openwebui_env: {}

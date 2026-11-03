@@ -1,0 +1,17 @@
+---
+openwebui_env_default:
+  DATA_DIR: "{{ openwebui_data_dir }}"
+
+  # Logging
+  ENABLE_AUDIT_STDOUT: "True"
+  ENABLE_AUDIT_LOGS_FILE: "False"
+
+  # Performance & RAM
+  ENABLE_BASE_MODELS_CACHE: "True"
+  MODELS_CACHE_TTL: "300"
+  ENABLE_QUERIES_CACHE: "True"
+  RAG_SYSTEM_CONTEXT: "True"
+  RAG_EMBEDDING_ENGINE: "openai"
+  ENABLE_REALTIME_CHAT_SAVE: "False"
+  AUDIO_STT_ENGINE: "webapi"
+  ENABLE_AUTOCOMPLETE_GENERATION: "False"

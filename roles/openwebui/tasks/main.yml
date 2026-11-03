@@ -3,23 +3,49 @@
   ansible.builtin.set_fact:
     openwebui_state: "{{ 'present' if openwebui_enabled else 'absent' }}"
 
-- name: Ensure venv directory exists
-  ansible.builtin.file:
-    path: /opt/openwebui/venv
-    state: directory
-    mode: "0755"
+- name: Check for legacy Open WebUI install directory
+  when: openwebui_enabled
+  ansible.builtin.stat:
+    path: "{{ openwebui_package_path }}"
+    follow: false
+  register: openwebui_package_path_stat
 
-- name: Install Open WebUI
-  ansible.builtin.pip:
-    name: open-webui
-    virtualenv: /opt/openwebui/venv
-    state: "{{ openwebui_state }}"
+- name: Remove legacy Open WebUI install directory
+  when:
+    - openwebui_enabled
+    - openwebui_package_path_stat.stat.exists
+    - openwebui_package_path_stat.stat.isdir | default(false)
+    - not (openwebui_package_path_stat.stat.islnk | default(false))
+  ansible.builtin.file:
+    path: "{{ openwebui_package_path }}"
+    state: absent
+
+- name: Build Open WebUI
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ openwebui_package }}"
+    nix_build_out: "{{ openwebui_package_path }}"
+    nix_build_state: "{{ openwebui_state }}"
+    nix_build_allow_unfree: true
 
 - name: Create s6 service
   ansible.builtin.include_role:
     name: s6_service
   vars:
     s6_service_name: openwebui
-    s6_service_command: "exec /opt/openwebui/venv/bin/open-webui serve --host {{ openwebui_host }} --port {{ openwebui_port }}"
-    s6_service_env: "{{ openwebui_env }}"
+    s6_service_command: "exec {{ openwebui_package_path }}/bin/open-webui serve --host {{ openwebui_host }} --port {{ openwebui_port }}"
+    s6_service_user_name: "{{ openwebui_user }}"
+    s6_service_user_group: "{{ openwebui_group }}"
+    s6_service_user_home: "{{ openwebui_data_dir }}"
+    s6_service_env: "{{ openwebui_env_default | combine(openwebui_env, recursive=true) }}"
     s6_service_state: "{{ openwebui_state }}"
+
+- name: Ensure Open WebUI data directory exists
+  when: openwebui_enabled
+  ansible.builtin.file:
+    path: "{{ openwebui_data_dir }}"
+    state: directory
+    owner: "{{ openwebui_user }}"
+    group: "{{ openwebui_group }}"
+    recurse: true

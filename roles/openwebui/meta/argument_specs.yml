@@ -3,13 +3,33 @@ argument_specs:
   main:
     short_description: Configure and deploy Open WebUI
     description:
-      - Installs Open WebUI via pip into a virtualenv and creates an s6 service with environment variable configuration.
+      - Builds Open WebUI from a configurable nix package attribute and creates an s6 service with environment variable configuration.
     options:
       openwebui_enabled:
         type: bool
         required: false
         default: false
         description: Enable the Open WebUI service
+      openwebui_package:
+        type: str
+        required: false
+        default: nixpkgs/8edc0c72e3a38faf5434e40d1f19431125fe4b30#open-webui
+        description: Nix package attribute for Open WebUI
+      openwebui_package_path:
+        type: path
+        required: false
+        default: /opt/openwebui
+        description: Nix build output path for Open WebUI
+      openwebui_user:
+        type: str
+        required: false
+        default: openwebui
+        description: System user for the Open WebUI service
+      openwebui_group:
+        type: str
+        required: false
+        default: openwebui
+        description: System group for the Open WebUI service
       openwebui_host:
         type: str
         required: false
@@ -20,10 +40,15 @@ argument_specs:
         required: false
         default: "3005"
         description: TCP port for the Open WebUI server
+      openwebui_data_dir:
+        type: path
+        required: false
+        default: /var/lib/openwebui
+        description: Data directory for Open WebUI
       openwebui_env:
         type: dict
         required: false
         description: >-
           Environment variables for Open WebUI configuration. See
-          [`defaults/main.yml#L5-L20`](https://github.com/lightly-toasted/phomelab/blob/main/roles/openwebui/defaults/main.yml#L5-L20)
+          [`vars/main.yml#L2-L17`](https://github.com/lightly-toasted/phomelab/blob/main/roles/openwebui/vars/main.yml#L2-L17)
           for an example.
