@@ -13,7 +13,7 @@ argument_specs:
       c2fmzq_package:
         type: str
         required: false
-        default: nixpkgs#c2fmzq
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#c2fmzq
         description: Nix package attribute for c2fmzq
       c2fmzq_package_path:
         type: path

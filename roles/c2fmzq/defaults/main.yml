@@ -1,6 +1,6 @@
 ---
 c2fmzq_enabled: false
-c2fmzq_package: nixpkgs#c2fmzq
+c2fmzq_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#c2fmzq
 c2fmzq_package_path: /opt/c2fmzq
 c2fmzq_user: c2fmzq
 c2fmzq_group: c2fmzq
