@@ -1,0 +1,5 @@
+---
+trilium_env_default:
+  TRILIUM_DATA_DIR: "{{ trilium_data_dir }}"
+  TRILIUM_NETWORK_HOST: "{{ trilium_host }}"
+  TRILIUM_NETWORK_PORT: "{{ trilium_port }}"
