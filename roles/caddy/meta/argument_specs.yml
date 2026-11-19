@@ -13,7 +13,7 @@ argument_specs:
       caddy_package:
         type: str
         required: false
-        default: nixpkgs#caddy
+        default: nixpkgs/9013764fcc0ea99fa16cf7aa7decf8a5c3889dd2#caddy
         description: Nix package attribute for Caddy
       caddy_package_path:
         type: path
