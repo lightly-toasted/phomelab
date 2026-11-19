@@ -1,0 +1,38 @@
+---
+- name: Set OliveTin state fact
+  ansible.builtin.set_fact:
+    olivetin_state: "{{ 'present' if olivetin_enabled else 'absent' }}"
+
+- name: Build OliveTin
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ olivetin_package }}"
+    nix_build_out: "{{ olivetin_package_path }}"
+    nix_build_state: "{{ olivetin_state }}"
+
+- name: Create s6 service
+  ansible.builtin.include_role:
+    name: s6_service
+  vars:
+    s6_service_name: olivetin
+    s6_service_command: "exec {{ olivetin_package_path }}/bin/OliveTin -configdir {{ olivetin_config_dir }}"
+    s6_service_user_name: "{{ olivetin_user }}"
+    s6_service_user_group: "{{ olivetin_group }}"
+    s6_service_state: "{{ olivetin_state }}"
+
+- name: Ensure OliveTin config directory exist
+  when: olivetin_enabled
+  ansible.builtin.file:
+    path: "{{ olivetin_config_dir }}"
+    state: directory
+    owner: "{{ olivetin_user }}"
+    group: "{{ olivetin_group }}"
+    recurse: true
+
+- name: Create config.yaml
+  when: olivetin_enabled
+  ansible.builtin.copy:
+    dest: "{{ olivetin_config_dir }}/config.yaml"
+    content: "{{ olivetin_config_default | combine(olivetin_config, recursive=true) | to_nice_yaml }}"
+    mode: "0644"

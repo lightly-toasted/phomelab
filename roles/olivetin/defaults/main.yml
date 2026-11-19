@@ -1,0 +1,11 @@
+---
+olivetin_enabled: false
+olivetin_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#olivetin-3k
+olivetin_package_path: /opt/olivetin
+olivetin_user: olivetin
+olivetin_group: olivetin
+
+olivetin_config_dir: /etc/OliveTin
+olivetin_config:
+  listenAddressSingleHTTPFrontend: "0.0.0.0:3015"
+

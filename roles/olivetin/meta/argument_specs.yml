@@ -1,0 +1,42 @@
+---
+argument_specs:
+  main:
+    short_description: Configure and deploy OliveTin
+    description:
+      - Builds OliveTin from a configurable nix package attribute and creates an s6 service with a YAML configuration file.
+    options:
+      olivetin_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the OliveTin service
+      olivetin_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#olivetin-3k
+        description: Nix package attribute for OliveTin
+      olivetin_package_path:
+        type: path
+        required: false
+        default: /opt/olivetin
+        description: Nix build output path for OliveTin
+      olivetin_user:
+        type: str
+        required: false
+        default: olivetin
+        description: System user for the OliveTin service
+      olivetin_group:
+        type: str
+        required: false
+        default: olivetin
+        description: System group for the OliveTin service
+      olivetin_config_dir:
+        type: path
+        required: false
+        default: /etc/OliveTin
+        description: Directory containing the OliveTin configuration file (config.yaml)
+      olivetin_config:
+        type: dict
+        required: false
+        description: OliveTin configuration merged with the role defaults. See the
+          [OliveTin configuration documentation](https://docs.olivetin.app/config.html).
