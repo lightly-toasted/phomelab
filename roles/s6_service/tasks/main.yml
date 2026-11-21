@@ -37,6 +37,18 @@
         home: "{{ s6_service_user_home }}"
         state: "{{ s6_service_state }}"
         force: true
+      register: s6_service_user
+    
+    # user may be recreated with a new UID after disable/enable
+    # chown is far faster than ansible.builtin.file recurse on large homes
+    - name: Chown service home to new service user
+      when:
+        - s6_service_state == "present"
+        - s6_service_user.changed
+      ansible.builtin.command:
+        argv: [chown, -c, -R, "{{ s6_service_user_name }}:{{ s6_service_user_group }}", "{{ s6_service_user_home }}"]
+      register: s6_service_chown
+      changed_when: s6_service_chown.stdout | length > 0
 
 - name: Ensure s6 service is absent
   when: s6_service_state == "absent"
