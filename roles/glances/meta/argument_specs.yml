@@ -10,3 +10,13 @@ argument_specs:
         required: false
         default: false
         description: Enable the Glances service
+      glances_package:
+        type: str
+        required: false
+        default: nixpkgs/7dd199b0e2993e37b4775ed66b1c291699608c9f#glances
+        description: Nix package attribute for Glances
+      glances_package_path:
+        type: path
+        required: false
+        default: /opt/glances
+        description: Nix build output path for Glances

@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: nixpkgs#navidrome
-    nix_build_out: /opt/navidrome
+    nix_build_attr: "{{ navidrome_package }}"
+    nix_build_out: "{{ navidrome_package_path }}"
     nix_build_state: "{{ navidrome_state }}"
 
 - name: Create s6 service
@@ -16,7 +16,7 @@
     name: s6_service
   vars:
     s6_service_name: navidrome
-    s6_service_command: 'exec /opt/navidrome/bin/navidrome --configfile "/etc/navidrome/navidrome.toml"'
+    s6_service_command: 'exec {{ navidrome_package_path }}/bin/navidrome --configfile "/etc/navidrome/navidrome.toml"'
     s6_service_user_name: "{{ navidrome_user }}"
     s6_service_user_group: "{{ navidrome_group }}"
     s6_service_state: "{{ navidrome_state }}"

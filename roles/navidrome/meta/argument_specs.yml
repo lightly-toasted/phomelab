@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the Navidrome service
+      navidrome_package:
+        type: str
+        required: false
+        default: nixpkgs/e2ccecbf30866802b1db536246e0939eccbd7bfb#navidrome
+        description: Nix package attribute for Navidrome
+      navidrome_package_path:
+        type: path
+        required: false
+        default: /opt/navidrome
+        description: Nix build output path for Navidrome
       navidrome_user:
         type: str
         required: false

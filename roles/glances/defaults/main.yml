@@ -1,2 +1,4 @@
 ---
 glances_enabled: false
+glances_package: nixpkgs/7dd199b0e2993e37b4775ed66b1c291699608c9f#glances
+glances_package_path: /opt/glances

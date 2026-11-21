@@ -1,5 +1,7 @@
 ---
 restic_rest_server_enabled: false
+restic_rest_server_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#restic-rest-server
+restic_rest_server_package_path: /opt/restic_rest_server
 restic_rest_server_user: restic_rest_server
 restic_rest_server_group: "{{ restic_rest_server_user }}"
 restic_rest_server_data_dir: /var/lib/{{ restic_rest_server_user }}

@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: nixpkgs#restic-rest-server
-    nix_build_out: /opt/restic_rest_server
+    nix_build_attr: "{{ restic_rest_server_package }}"
+    nix_build_out: "{{ restic_rest_server_package_path }}"
     nix_build_state: "{{ restic_rest_server_state }}"
 
 - name: Create s6 service
@@ -17,7 +17,7 @@
   vars:
     s6_service_name: restic_rest_server
     s6_service_command: |
-      exec /opt/restic_rest_server/bin/rest-server \
+      exec {{ restic_rest_server_package_path }}/bin/rest-server \
         --listen "127.0.0.1:{{ restic_rest_server_port }}" \
         --log - \
         --path {{ restic_rest_server_data_dir }}

@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the restic REST server service
+      restic_rest_server_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#restic-rest-server
+        description: Nix package attribute for restic REST server
+      restic_rest_server_package_path:
+        type: path
+        required: false
+        default: /opt/restic_rest_server
+        description: Nix build output path for restic REST server
       restic_rest_server_user:
         type: str
         required: false

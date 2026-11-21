@@ -1,5 +1,7 @@
 ---
 navidrome_enabled: false
+navidrome_package: nixpkgs/e2ccecbf30866802b1db536246e0939eccbd7bfb#navidrome
+navidrome_package_path: /opt/navidrome
 navidrome_user: navidrome
 navidrome_group: navidrome
 navidrome_port: "3004"

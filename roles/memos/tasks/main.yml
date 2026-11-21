@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: nixpkgs#memos
-    nix_build_out: /opt/memos
+    nix_build_attr: "{{ memos_package }}"
+    nix_build_out: "{{ memos_package_path }}"
     nix_build_state: "{{ memos_state }}"
 
 - name: Create s6 service
@@ -16,7 +16,7 @@
     name: s6_service
   vars:
     s6_service_name: memos
-    s6_service_command: "exec /opt/memos/bin/memos"
+    s6_service_command: "exec {{ memos_package_path }}/bin/memos"
     s6_service_env:
       MEMOS_DATA: "{{ memos_data_dir }}"
       MEMOS_PORT: "{{ memos_port }}"

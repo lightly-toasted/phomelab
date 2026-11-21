@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the Redis service
+      redis_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#redis
+        description: Nix package attribute for Redis
+      redis_package_path:
+        type: path
+        required: false
+        default: /opt/redis
+        description: Nix build output path for Redis
       redis_user:
         type: str
         required: false

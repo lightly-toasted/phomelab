@@ -1,5 +1,7 @@
 ---
 memos_enabled: false
+memos_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#memos
+memos_package_path: /opt/memos
 memos_data_dir: "/var/lib/memos"
 
 memos_port: "3007"

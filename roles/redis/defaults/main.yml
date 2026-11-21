@@ -1,5 +1,7 @@
 ---
 redis_enabled: false
+redis_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#redis
+redis_package_path: /opt/redis
 redis_user: redis
 redis_group: "{{ redis_user }}"
 redis_socket: /run/redis/redis.sock

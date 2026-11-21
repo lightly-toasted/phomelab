@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the Memos service
+      memos_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#memos
+        description: Nix package attribute for Memos
+      memos_package_path:
+        type: path
+        required: false
+        default: /opt/memos
+        description: Nix build output path for Memos
       memos_data_dir:
         type: path
         required: false
