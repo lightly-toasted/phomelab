@@ -1,0 +1,60 @@
+---
+argument_specs:
+  main:
+    short_description: Chhoto URL
+    description:
+      - Simple, blazingly fast, selfhosted URL shortener with no unnecessary features
+    seealso:
+      - name: Chhoto URL
+        description: Homepage
+        link: https://github.com/SinTan1729/chhoto-url
+    options:
+      chhoto_url_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the Chhoto URL service
+      chhoto_url_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#chhoto-url
+        description: Nix package attribute for Chhoto URL
+      chhoto_url_package_path:
+        type: path
+        required: false
+        default: /opt/chhoto_url
+        description: Nix build output path for Chhoto URL
+      chhoto_url_user:
+        type: str
+        required: false
+        default: chhoto_url
+        description: System user for the Chhoto URL service
+      chhoto_url_group:
+        type: str
+        required: false
+        default: chhoto_url
+        description: System group for the Chhoto URL service
+      chhoto_url_host:
+        type: str
+        required: false
+        default: "0.0.0.0"
+        description: Bind address for the Chhoto URL server
+      chhoto_url_port:
+        type: str
+        required: false
+        default: "3016"
+        description: TCP port for the Chhoto URL server
+      chhoto_url_data_dir:
+        type: path
+        required: false
+        default: /var/lib/chhoto_url
+        description: Data directory for Chhoto URL
+      chhoto_url_env:
+        type: dict
+        required: false
+        default: {}
+        description: >-
+          Additional environment variables for Chhoto URL. See
+          [`vars/main.yml#L2-L5`](https://github.com/lightly-toasted/phomelab/blob/main/roles/chhoto_url/vars/main.yml#L2-L5)
+          and [Chhoto URL configuration](https://github.com/SinTan1729/chhoto-url/blob/master/docs/INSTALLATION.md#configuration-options)
+          for available options.

@@ -1,0 +1,11 @@
+---
+chhoto_url_enabled: false
+chhoto_url_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#chhoto-url
+chhoto_url_package_path: /opt/chhoto_url
+chhoto_url_user: chhoto_url
+chhoto_url_group: chhoto_url
+
+chhoto_url_data_dir: "/var/lib/{{ chhoto_url_user }}"
+chhoto_url_host: "0.0.0.0"
+chhoto_url_port: "3016"
+chhoto_url_env: {}

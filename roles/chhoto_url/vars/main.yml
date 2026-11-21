@@ -1,0 +1,5 @@
+---
+chhoto_url_env_default:
+  CHHOTO_DB_URL: "{{ chhoto_url_data_dir }}/urls.sqlite"
+  CHHOTO_LISTEN_ADDRESS: "{{ chhoto_url_host }}"
+  CHHOTO_LISTEN_PORT: "{{ chhoto_url_port }}"
