@@ -58,12 +58,28 @@ def fmt_default(v: Any) -> str:
     return str(v)
 
 
+def get_homepage(main_spec: dict[str, Any]) -> str:
+    short = main_spec.get("short_description", "")
+    for item in main_spec.get("seealso") or []:
+        if isinstance(item, dict) and item.get("name") == short:
+            return item.get("link", "")
+    return ""
+
+
+def get_short_description(main_spec: dict[str, Any]) -> str:
+    short = main_spec.get("short_description", "")
+    homepage = get_homepage(main_spec)
+    if short and homepage:
+        return f"[{short}]({homepage})"
+    return short
+
+
 def generate_role_doc(
     role_name: str,
     specs: dict[str, Any],
 ) -> str:
     main_spec = specs.get("main", {})
-    short_desc = main_spec.get("short_description", "")
+    short_desc = get_short_description(main_spec)
     description = main_spec.get("description", "")
     options = main_spec.get("options", {})
 
@@ -130,7 +146,7 @@ def generate_role_doc(
     return "\n".join(lines)
 
 
-def generate_overview(role_list: list[tuple[str, str]]) -> str:
+def generate_overview(role_list: list[tuple[str, str, str]]) -> str:
     lines = [
         "# Overview",
         "",
@@ -138,11 +154,11 @@ def generate_overview(role_list: list[tuple[str, str]]) -> str:
         "",
         "All roles tagged `service` in `playbooks/site.yml`:",
         "",
-        "| Role | Description |",
-        "|------|-------------|",
+        "| Role | App | Description |",
+        "|------|-----|-------------|",
     ]
-    for name, desc in sorted(role_list):
-        lines.append(f"| [{name}]({name}.md) | {desc} |")
+    for name, short_desc, description in sorted(role_list):
+        lines.append(f"| [{name}]({name}.md) | {short_desc} | {description} |")
     lines.append("")
     return "\n".join(lines)
 
@@ -154,7 +170,7 @@ def main() -> None:
 
     ROLES_DOCS_DIR.mkdir(parents=True, exist_ok=True)
 
-    role_list: list[tuple[str, str]] = []
+    role_list: list[tuple[str, str, str]] = []
 
     for entry in sorted(ROLES_DIR.iterdir()):
         if not entry.is_dir():
@@ -165,8 +181,11 @@ def main() -> None:
             continue
 
         main_spec = specs.get("main", {})
-        short_desc = main_spec.get("short_description", "")
-        role_list.append((role_name, short_desc))
+        short_desc = get_short_description(main_spec)
+        description = main_spec.get("description", "")
+        if isinstance(description, list):
+            description = description[0] if description else ""
+        role_list.append((role_name, short_desc, description))
 
         md = generate_role_doc(role_name, specs)
         out_file = ROLES_DOCS_DIR / f"{role_name}.md"

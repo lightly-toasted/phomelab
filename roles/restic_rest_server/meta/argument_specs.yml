@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy restic REST server
+    short_description: restic REST server
     description:
-      - Builds restic-rest-server from nixpkgs and creates an s6 service with htpasswd authentication.
+      - High performance HTTP server that implements restic's REST backend API
+    seealso:
+      - name: restic REST server
+        description: Homepage
+        link: https://github.com/restic/rest-server
     options:
       restic_rest_server_enabled:
         type: bool

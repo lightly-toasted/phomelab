@@ -1,0 +1,21 @@
+---
+argument_specs:
+  main:
+    short_description: restic
+    description:
+      - Backup program that is fast, efficient and secure
+    seealso:
+      - name: restic
+        description: Homepage
+        link: https://restic.net
+    options:
+      restic_package:
+        type: str
+        required: false
+        default: nixpkgs/05988b07fb05cbcb50be6bce197b4b5f75b5e61b#restic
+        description: Nix package attribute for restic
+      restic_package_path:
+        type: path
+        required: false
+        default: /opt/restic
+        description: Nix build output path for restic

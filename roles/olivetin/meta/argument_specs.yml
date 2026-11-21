@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy OliveTin
+    short_description: OliveTin
     description:
-      - Builds OliveTin from a configurable nix package attribute and creates an s6 service with a YAML configuration file.
+      - Gives safe and simple access to predefined shell commands from a web interface
+    seealso:
+      - name: OliveTin
+        description: Homepage
+        link: https://www.olivetin.app/
     options:
       olivetin_enabled:
         type: bool

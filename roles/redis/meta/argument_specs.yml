@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Redis
+    short_description: Redis
     description:
-      - Builds Redis from nixpkgs and creates an s6 service with Unix socket configuration.
+      - Open source, advanced key-value store
+    seealso:
+      - name: Redis
+        description: Homepage
+        link: https://redis.io
     options:
       redis_enabled:
         type: bool

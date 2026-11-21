@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Opengist
+    short_description: Opengist
     description:
-      - Builds Opengist from a configurable nix package attribute and creates an s6 service, rendering the configuration mapping to a YAML file.
+      - Self-hosted pastebin powered by Git
+    seealso:
+      - name: Opengist
+        description: Homepage
+        link: https://github.com/thomiceli/opengist
     options:
       opengist_enabled:
         type: bool

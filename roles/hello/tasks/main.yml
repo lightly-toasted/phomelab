@@ -1,9 +1,9 @@
 ---
-- name: Set Hello World state fact
+- name: Set GNU Hello state fact
   ansible.builtin.set_fact:
     hello_state: "{{ 'present' if hello_enabled else 'absent' }}"
 
-- name: Build Hello World
+- name: Build GNU Hello
   ansible.builtin.include_role:
     name: nix_build
   vars:

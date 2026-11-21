@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Memos
+    short_description: Memos
     description:
-      - Builds Memos from nixpkgs and creates an s6 service with data directory and port configuration via environment variables.
+      - Lightweight, self-hosted memo hub
+    seealso:
+      - name: Memos
+        description: Homepage
+        link: https://usememos.com
     options:
       memos_enabled:
         type: bool

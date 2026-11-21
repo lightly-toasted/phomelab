@@ -1,0 +1,21 @@
+---
+argument_specs:
+  main:
+    short_description: Tailscale
+    description:
+      - Node agent for Tailscale, a mesh VPN built on WireGuard
+    seealso:
+      - name: Tailscale
+        description: Homepage
+        link: https://tailscale.com
+    options:
+      tailscale_package:
+        type: str
+        required: false
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#tailscale
+        description: Nix package attribute for Tailscale
+      tailscale_package_path:
+        type: path
+        required: false
+        default: /opt/tailscale
+        description: Nix build output path for Tailscale

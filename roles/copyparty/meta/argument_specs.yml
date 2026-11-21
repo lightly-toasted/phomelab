@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy copyparty
+    short_description: copyparty
     description:
-      - Builds copyparty from a configurable nix package attribute and creates an s6 service with a raw INI configuration file.
+      - turn almost any device into a file server over http(s), webdav, ftp(s), and tftp
+    seealso:
+      - name: copyparty
+        description: Homepage
+        link: https://github.com/9001/copyparty
     options:
       copyparty_enabled:
         type: bool

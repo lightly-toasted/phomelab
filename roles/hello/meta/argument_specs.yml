@@ -1,10 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: "[GNU Hello](https://www.gnu.org/software/hello/manual/)"
+    short_description: GNU Hello
     description:
-      - Template role for new services
       - Program that produces a familiar, friendly greeting
+    seealso:
+      - name: GNU Hello
+        description: Homepage
+        link: https://www.gnu.org/software/hello/manual/
     options:
       hello_enabled:
         type: bool

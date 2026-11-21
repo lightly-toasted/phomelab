@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Trilium
+    short_description: Trilium
     description:
-      - Builds Trilium server from nixpkgs and creates an s6 service with config.ini for application settings.
+      - Hierarchical note taking application with focus on building large personal knowledge bases
+    seealso:
+      - name: Trilium
+        description: Homepage
+        link: https://github.com/TriliumNext/Trilium
     options:
       trilium_enabled:
         type: bool

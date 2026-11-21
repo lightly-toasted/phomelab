@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Caddy
+    short_description: Caddy
     description:
-      - Builds Caddy from a configurable nix package attribute and creates an s6 service with a Caddyfile template.
+      - Fast and extensible multi-platform HTTP/1-2-3 web server with automatic HTTPS
+    seealso:
+      - name: Caddy
+        description: Homepage
+        link: https://caddyserver.com
     options:
       caddy_enabled:
         type: bool

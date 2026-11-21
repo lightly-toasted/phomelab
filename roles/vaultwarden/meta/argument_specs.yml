@@ -1,10 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Vaultwarden
+    short_description: Vaultwarden
     description:
-      - Builds Vaultwarden and optionally the web vault from configurable nix package attributes. Creates an s6 service with merged default and user-provided
-        environment variables.
+      - Unofficial Bitwarden compatible server written in Rust
+    seealso:
+      - name: Vaultwarden
+        description: Homepage
+        link: https://github.com/dani-garcia/vaultwarden
     options:
       vaultwarden_enabled:
         type: bool

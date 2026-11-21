@@ -1,9 +1,9 @@
 ---
-- name: Set c2fmzq state fact
+- name: Set c2FmZQ state fact
   ansible.builtin.set_fact:
     c2fmzq_state: "{{ 'present' if c2fmzq_enabled else 'absent' }}"
 
-- name: Build c2fmzq
+- name: Build c2FmZQ
   ansible.builtin.include_role:
     name: nix_build
   vars:

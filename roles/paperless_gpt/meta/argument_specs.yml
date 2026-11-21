@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy paperless-gpt
+    short_description: paperless-gpt
     description:
-      - Builds paperless-gpt from a pinned flake commit and creates an s6 service with environment variable configuration for LLM providers and OCR settings.
+      - Use LLMs and LLM Vision (OCR) to handle paperless-ngx
+    seealso:
+      - name: paperless-gpt
+        description: Homepage
+        link: https://github.com/icereed/paperless-gpt
     options:
       paperless_gpt_enabled:
         type: bool

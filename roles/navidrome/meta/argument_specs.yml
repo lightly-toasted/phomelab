@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Navidrome
+    short_description: Navidrome
     description:
-      - Builds Navidrome from nixpkgs and creates an s6 service with music streaming configuration.
+      - Music Server and Streamer compatible with Subsonic/Airsonic
+    seealso:
+      - name: Navidrome
+        description: Homepage
+        link: https://www.navidrome.org/
     options:
       navidrome_enabled:
         type: bool

@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Paperless-ngx
+    short_description: Paperless-ngx
     description:
-      - Builds Paperless-ngx from nixpkgs (pinned commit) and creates multiple s6 services (web, worker, beat, consumer).
+      - Tool to scan, index, and archive all of your physical documents
+    seealso:
+      - name: Paperless-ngx
+        description: Homepage
+        link: https://docs.paperless-ngx.com/
     options:
       paperless_ngx_enabled:
         type: bool

@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy c2fmzq
+    short_description: c2FmZQ
     description:
-      - Builds c2fmzq from a configurable nix package attribute and creates an s6 service with CLI flags and environment variables for configuration.
+      - Securely encrypt, store, and share files, including but not limited to pictures and videos
+    seealso:
+      - name: c2FmZQ
+        description: Homepage
+        link: https://github.com/c2FmZQ/photos
     options:
       c2fmzq_enabled:
         type: bool

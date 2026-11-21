@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Glances
+    short_description: Glances
     description:
-      - Builds Glances from nixpkgs and creates an s6 service.
+      - Cross-platform curses-based monitoring tool
+    seealso:
+      - name: Glances
+        description: Homepage
+        link: https://nicolargo.github.io/glances/
     options:
       glances_enabled:
         type: bool

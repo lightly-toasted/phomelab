@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Open WebUI
+    short_description: Open WebUI
     description:
-      - Builds Open WebUI from a configurable nix package attribute and creates an s6 service with environment variable configuration.
+      - Comprehensive suite for LLMs with a user-friendly WebUI
+    seealso:
+      - name: Open WebUI
+        description: Homepage
+        link: https://github.com/open-webui/open-webui
     options:
       openwebui_enabled:
         type: bool

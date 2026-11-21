@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Forgejo
+    short_description: Forgejo
     description:
-      - Builds Forgejo from nixpkgs and creates an s6 service with app.ini configuration file.
+      - Self-hosted lightweight software forge
+    seealso:
+      - name: Forgejo
+        description: Homepage
+        link: https://forgejo.org
     options:
       forgejo_enabled:
         type: bool

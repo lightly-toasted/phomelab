@@ -1,9 +1,13 @@
 ---
 argument_specs:
   main:
-    short_description: "[rustypaste](https://github.com/orhun/rustypaste)"
+    short_description: rustypaste
     description:
       - Minimal file upload/pastebin service
+    seealso:
+      - name: rustypaste
+        description: Homepage
+        link: https://github.com/orhun/rustypaste
     options:
       rustypaste_enabled:
         type: bool
