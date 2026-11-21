@@ -19,6 +19,7 @@ new APP_NAME ROLE_NAME=(replace_regex(lowercase(APP_NAME), "[ -]", "_")) PACKAGE
   sed -i "s|nixpkgs/[^#]*#hello|$ref|g" roles/{{ROLE_NAME}}/defaults/main.yml roles/{{ROLE_NAME}}/meta/argument_specs.yml; \
   sed -i 's/hello/{{ROLE_NAME}}/g' roles/{{ROLE_NAME}}/defaults/main.yml; \
   sed -i -e 's/hello/{{ROLE_NAME}}/g' -e 's/GNU Hello/{{APP_NAME}}/g' roles/{{ROLE_NAME}}/tasks/main.yml roles/{{ROLE_NAME}}/meta/argument_specs.yml; \
+  sed -i '/^      - Template role for new services$/d' roles/{{ROLE_NAME}}/meta/argument_specs.yml; \
   sed -i "/^    description:/,/^    seealso:/ s|^      - .*|      - $description|" roles/{{ROLE_NAME}}/meta/argument_specs.yml; \
   sed -i "s|^        link: .*|        link: $homepage|" roles/{{ROLE_NAME}}/meta/argument_specs.yml
   @echo "Created new role {{ROLE_NAME}}"

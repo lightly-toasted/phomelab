@@ -3,6 +3,7 @@ argument_specs:
   main:
     short_description: GNU Hello
     description:
+      - Template role for new services
       - Program that produces a familiar, friendly greeting
     seealso:
       - name: GNU Hello

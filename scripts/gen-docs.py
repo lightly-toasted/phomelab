@@ -146,20 +146,69 @@ def generate_role_doc(
     return "\n".join(lines)
 
 
-def generate_overview(role_list: list[tuple[str, str, str]]) -> str:
+def load_service_roles() -> set[str]:
+    play = yaml.safe_load((ROLES_DIR.parent / "playbooks" / "site.yml").read_text())[0]
+    return {
+        role["role"]
+        for role in play.get("roles") or []
+        if isinstance(role, dict) and "service" in (role.get("tags") or [])
+    }
+
+
+def load_dependency_roles() -> set[str]:
+    dependencies = set()
+    for meta_file in ROLES_DIR.glob("*/meta/main.yml"):
+        data = yaml.safe_load(meta_file.read_text()) or {}
+        for dependency in data.get("dependencies") or []:
+            dependencies.add(dependency if isinstance(dependency, str) else dependency.get("role"))
+    return dependencies
+
+
+def generate_overview(
+    role_list: list[tuple[str, str, str]],
+    service_roles: set[str],
+    dependency_roles: set[str],
+) -> str:
+    groups = [
+        ("Service roles", sorted(r for r in role_list if r[0] in service_roles)),
+        (
+            "Dependency roles",
+            sorted(
+                r
+                for r in role_list
+                if r[0] in dependency_roles and r[0] not in service_roles
+            ),
+        ),
+        (
+            "Other roles",
+            sorted(
+                r
+                for r in role_list
+                if r[0] not in service_roles and r[0] not in dependency_roles
+            ),
+        ),
+    ]
+
     lines = [
         "# Overview",
         "",
-        "This section documents the variables exposed by each service role.",
+        "This section documents the variables exposed by each role.",
         "",
-        "All roles tagged `service` in `playbooks/site.yml`:",
-        "",
-        "| Role | App | Description |",
-        "|------|-----|-------------|",
     ]
-    for name, short_desc, description in sorted(role_list):
-        lines.append(f"| [{name}]({name}.md) | {short_desc} | {description} |")
-    lines.append("")
+    for title, roles in groups:
+        if not roles:
+            continue
+        lines.extend(
+            [
+                f"## {title}",
+                "",
+                "| Role | App | Description |",
+                "|------|-----|-------------|",
+            ]
+        )
+        for name, short_desc, description in roles:
+            lines.append(f"| [{name}]({name}.md) | {short_desc} | {description} |")
+        lines.append("")
     return "\n".join(lines)
 
 
@@ -192,7 +241,7 @@ def main() -> None:
         out_file.write_text(md)
         print(f"  Generated {out_file}")
 
-    overview = generate_overview(role_list)
+    overview = generate_overview(role_list, load_service_roles(), load_dependency_roles())
     overview_file = ROLES_DOCS_DIR / "index.md"
     overview_file.write_text(overview)
     print(f"  Generated {overview_file}")
