@@ -1,7 +1,21 @@
 ---
-- name: Build restic
+- name: Set tailscale state fact
+  ansible.builtin.set_fact:
+    tailscale_state: "{{ 'present' if tailscale_enabled else 'absent' }}"
+
+- name: Build tailscale
   ansible.builtin.include_role:
     name: nix_build
   vars:
     nix_build_attr: "{{ tailscale_package }}"
     nix_build_out: "{{ tailscale_package_path }}"
+    nix_build_state: "{{ tailscale_state }}"
+
+- name: Create s6 service
+  ansible.builtin.include_role:
+    name: s6_service
+  vars:
+    s6_service_name: tailscaled
+    s6_service_command: "exec {{ tailscale_package_path }}/bin/tailscaled"
+    s6_service_create_user: false
+    s6_service_state: "{{ tailscale_state }}"

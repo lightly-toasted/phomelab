@@ -9,6 +9,11 @@ argument_specs:
         description: Homepage
         link: https://tailscale.com
     options:
+      tailscale_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the tailscaled service
       tailscale_package:
         type: str
         required: false

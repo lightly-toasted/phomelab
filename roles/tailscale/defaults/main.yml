@@ -1,3 +1,4 @@
 ---
+tailscale_enabled: false
 tailscale_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#tailscale
 tailscale_package_path: /opt/tailscale
