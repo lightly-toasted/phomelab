@@ -1,9 +1,10 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy Hello World
+    short_description: "[GNU Hello](https://www.gnu.org/software/hello/manual/)"
     description:
-      - Template role for new services. Builds from nixpkgs and creates an s6 service.
+      - Template role for new services
+      - Program that produces a familiar, friendly greeting
     options:
       hello_enabled:
         type: bool
@@ -13,7 +14,7 @@ argument_specs:
       hello_package:
         type: str
         required: false
-        default: nixpkgs#hello
+        default: nixpkgs/3d46470bb3030020f7e1361f33514854f5bfa86d#hello
         description: Nix package attribute for hello
       hello_package_path:
         type: path

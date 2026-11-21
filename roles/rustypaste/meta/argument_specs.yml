@@ -1,9 +1,9 @@
 ---
 argument_specs:
   main:
-    short_description: Configure and deploy rustypaste
+    short_description: "[rustypaste](https://github.com/orhun/rustypaste)"
     description:
-      - Builds rustypaste from a configurable nix package attribute and creates an s6 service with a raw TOML configuration file.
+      - Minimal file upload/pastebin service
     options:
       rustypaste_enabled:
         type: bool
@@ -13,7 +13,7 @@ argument_specs:
       rustypaste_package:
         type: str
         required: false
-        default: nixpkgs#rustypaste
+        default: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#rustypaste
         description: Nix package attribute for rustypaste
       rustypaste_package_path:
         type: path

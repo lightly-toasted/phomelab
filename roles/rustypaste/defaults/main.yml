@@ -1,6 +1,6 @@
 ---
 rustypaste_enabled: false
-rustypaste_package: nixpkgs#rustypaste
+rustypaste_package: nixpkgs/55ba7f49ef2962b42cbd126522b7df5f95037679#rustypaste
 rustypaste_package_path: /opt/rustypaste
 rustypaste_user: rustypaste
 rustypaste_group: rustypaste

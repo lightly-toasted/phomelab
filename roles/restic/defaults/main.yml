@@ -1,3 +1,3 @@
 ---
-restic_package: nixpkgs#restic
+restic_package: nixpkgs/05988b07fb05cbcb50be6bce197b4b5f75b5e61b#restic
 restic_package_path: /opt/restic
