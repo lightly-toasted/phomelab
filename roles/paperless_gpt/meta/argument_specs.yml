@@ -10,6 +10,16 @@ argument_specs:
         required: false
         default: false
         description: Enable the paperless-gpt service
+      paperless_gpt_package:
+        type: str
+        required: false
+        default: github:lightly-toasted/phomelab/c1644f0c7cd8ea06d44249da68b98dc752d8420b#paperless-gpt
+        description: Nix package attribute for paperless-gpt
+      paperless_gpt_package_path:
+        type: path
+        required: false
+        default: /opt/paperless-gpt
+        description: Nix build output path for paperless-gpt
       paperless_gpt_user:
         type: str
         required: false

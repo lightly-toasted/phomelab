@@ -7,8 +7,8 @@
   ansible.builtin.include_role:
     name: nix_build
   vars:
-    nix_build_attr: github:lightly-toasted/phomelab/c1644f0c7cd8ea06d44249da68b98dc752d8420b#paperless-gpt
-    nix_build_out: /opt/paperless-gpt
+    nix_build_attr: "{{ paperless_gpt_package }}"
+    nix_build_out: "{{ paperless_gpt_package_path }}"
     nix_build_state: "{{ paperless_gpt_state }}"
 
 - name: Create s6 service
@@ -18,7 +18,7 @@
     s6_service_name: paperless-gpt
     s6_service_user_name: "{{ paperless_gpt_user }}"
     s6_service_user_group: "{{ paperless_gpt_group }}"
-    s6_service_command: "exec /opt/paperless-gpt/bin/paperless-gpt"
+    s6_service_command: "exec {{ paperless_gpt_package_path }}/bin/paperless-gpt"
     s6_service_env: "{{ paperless_gpt_env }}"
     s6_service_state: "{{ paperless_gpt_state }}"
     s6_service_workdir: "{{ paperless_gpt_data_dir }}"
