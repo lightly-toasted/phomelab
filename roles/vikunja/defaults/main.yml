@@ -1,0 +1,14 @@
+---
+vikunja_enabled: false
+vikunja_package: nixpkgs/73e728ddb6b7a12d18808f510813a13ee1fe4cce#vikunja
+vikunja_package_path: /opt/vikunja
+vikunja_user: vikunja
+vikunja_group: vikunja
+
+vikunja_host: "0.0.0.0"
+vikunja_port: "3017"
+vikunja_data_dir: "/var/lib/{{ vikunja_user }}"
+vikunja_config_dir: /etc/vikunja
+
+vikunja_config: {} # https://vikunja.io/docs/config-options/
+vikunja_env: {} # overrides config file values

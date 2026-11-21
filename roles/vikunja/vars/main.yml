@@ -1,0 +1,5 @@
+---
+vikunja_config_default:
+  service:
+    interface: "{{ vikunja_host }}:{{ vikunja_port }}"
+    rootpath: "{{ vikunja_data_dir }}"

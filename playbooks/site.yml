@@ -29,6 +29,7 @@
     - { role: copyparty, tags: [copyparty, service] }
     - { role: olivetin, tags: [olivetin, service] }
     - { role: chhoto_url, tags: [chhoto_url, service] }
+    - { role: vikunja, tags: [vikunja, service] }
 
     # reverse proxies
     - { role: caddy, tags: [caddy, service] }

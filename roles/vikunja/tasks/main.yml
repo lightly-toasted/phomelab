@@ -1,0 +1,50 @@
+---
+- name: Set Vikunja state fact
+  ansible.builtin.set_fact:
+    vikunja_state: "{{ 'present' if vikunja_enabled else 'absent' }}"
+
+- name: Build Vikunja
+  ansible.builtin.include_role:
+    name: nix_build
+  vars:
+    nix_build_attr: "{{ vikunja_package }}"
+    nix_build_out: "{{ vikunja_package_path }}"
+    nix_build_state: "{{ vikunja_state }}"
+
+- name: Create s6 service
+  ansible.builtin.include_role:
+    name: s6_service
+  vars:
+    s6_service_name: vikunja
+    s6_service_command: "exec {{ vikunja_package_path }}/bin/vikunja"
+    s6_service_user_name: "{{ vikunja_user }}"
+    s6_service_user_group: "{{ vikunja_group }}"
+    s6_service_state: "{{ vikunja_state }}"
+    s6_service_env: "{{ vikunja_env }}"
+
+- name: Ensure Vikunja data directory exists
+  when: vikunja_enabled
+  ansible.builtin.file:
+    path: "{{ vikunja_data_dir }}"
+    state: directory
+    owner: "{{ vikunja_user }}"
+    group: "{{ vikunja_group }}"
+    mode: "0755"
+
+- name: Ensure Vikunja config directory exists
+  when: vikunja_enabled
+  ansible.builtin.file:
+    path: "{{ vikunja_config_dir }}"
+    state: directory
+    owner: "{{ vikunja_user }}"
+    group: "{{ vikunja_group }}"
+    mode: "0755"
+
+- name: Create config.yml
+  when: vikunja_enabled
+  ansible.builtin.copy:
+    dest: "{{ vikunja_config_dir }}/config.yml"
+    content: "{{ vikunja_config_default | combine(vikunja_config, recursive=true) | to_nice_yaml }}"
+    owner: "{{ vikunja_user }}"
+    group: "{{ vikunja_group }}"
+    mode: "0640"

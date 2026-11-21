@@ -1,0 +1,66 @@
+---
+argument_specs:
+  main:
+    short_description: Vikunja
+    description:
+      - "Todo-app to organize your life"
+    seealso:
+      - name: Vikunja
+        description: Homepage
+        link: "https://vikunja.io/"
+    options:
+      vikunja_enabled:
+        type: bool
+        required: false
+        default: false
+        description: Enable the vikunja service
+      vikunja_package:
+        type: str
+        required: false
+        default: nixpkgs/73e728ddb6b7a12d18808f510813a13ee1fe4cce#vikunja
+        description: Nix package attribute for vikunja
+      vikunja_package_path:
+        type: path
+        required: false
+        default: /opt/vikunja
+        description: Nix build output path for vikunja
+      vikunja_user:
+        type: str
+        required: false
+        default: vikunja
+        description: System user for the vikunja service
+      vikunja_group:
+        type: str
+        required: false
+        default: vikunja
+        description: System group for the vikunja service
+      vikunja_host:
+        type: str
+        required: false
+        default: "0.0.0.0"
+        description: Address the Vikunja webserver listens on
+      vikunja_port:
+        type: str
+        required: false
+        default: "3017"
+        description: TCP port the Vikunja webserver listens on
+      vikunja_data_dir:
+        type: path
+        required: false
+        default: /var/lib/vikunja
+        description: Root path for the database, uploaded files, logs and plugins
+      vikunja_config_dir:
+        type: path
+        required: false
+        default: /etc/vikunja
+        description: Directory containing the Vikunja configuration file (config.yml)
+      vikunja_config:
+        type: dict
+        required: false
+        description: Vikunja configuration merged with the role defaults. See the
+          [Vikunja configuration documentation](https://vikunja.io/docs/config-options/).
+      vikunja_env:
+        type: dict
+        required: false
+        description: Environment variables passed to the s6 service. These override
+          values from the configuration file.
